@@ -22,9 +22,71 @@
             <TabItem Header="Ordrar">
 
             </TabItem>
+
+            <!-- TAB FOR DISHES -->
             <TabItem Header="Hantera maträtter">
 
+                <Grid Background="#eee">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TabControl Grid.Column="0" Grid.Row="1" Margin="10,10,10,10" Height="432">
+
+
+                        <!-- Add dishes-->
+                        <TabItem Header="Lägg till">
+                            <Border Padding="10">
+                                <StackPanel>
+
+
+                                </StackPanel>
+
+                            </Border>
+                        </TabItem>
+
+                        <!-- Update dishes-->
+                        <TabItem Header="Ändra">
+                            <Border Padding="10">
+                                <StackPanel>
+
+
+                                </StackPanel>
+
+                            </Border>
+                        </TabItem>
+                        <!-- Add dishes-->
+                        <TabItem Header="ta bort">
+                            <Border Padding="10">
+                                <StackPanel>
+
+
+                                </StackPanel>
+
+                            </Border>
+                        </TabItem>
+                    </TabControl>
+
+                    
+                    <!-- Available dishes -->
+                    <Grid Grid.Column="1" Margin="10">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+
+                            <RowDefinition Height="*" />
+
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Text="Available Dishes" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" Grid.Row="0" />
+                        <ListBox x:Name="AvailableDishes" Margin="0,26,0,0" Grid.RowSpan="2" />
+                    </Grid>
+                </Grid>
+
             </TabItem>
+
+
+            <!-- TAB FOR DRINKS-->
             <TabItem Header="Hantera drycker">
 
             </TabItem>
