@@ -1,0 +1,45 @@
+﻿<Window x:Class="DumplingWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DumplingWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+
+
+    <Grid Background="DarkRed">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Foreground="Gold" Text="House of Dumplings" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,20" />
+        <TabControl Grid.Row="1" Margin="10">
+            <TabItem Header="Start">
+
+            </TabItem>
+            <TabItem Header="Ordrar">
+
+            </TabItem>
+            <TabItem Header="Hantera maträtter">
+
+            </TabItem>
+            <TabItem Header="Hantera drycker">
+
+            </TabItem>
+            <TabItem Header="Kundhistorik">
+
+            </TabItem>
+            <TabItem Header="Personal">
+
+            </TabItem>
+
+
+        </TabControl>
+
+
+
+
+    </Grid>
+</Window>
