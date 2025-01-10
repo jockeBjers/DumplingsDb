@@ -36,23 +36,23 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                
+
                 <TextBlock Text="House of Dumplings" FontSize="40" FontWeight="Bold" Foreground="Gold"
                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" />
-                
+
                 <!-- Minimize Button -->
-                <Button Content="_" HorizontalAlignment="Right" Margin="0 0 5 0" VerticalAlignment="Top"
+                <Button Content="_" HorizontalAlignment="Right" Margin="0,13,5,0" VerticalAlignment="Top"
                         Width="30" Height="30" Background="DarkRed" BorderBrush="Black"
                         Grid.Column="1" Click="MinimizeButton_Click"/>
 
                 <!-- Close Button -->
-                <Button Content="X" HorizontalAlignment="Right" Margin="0 0 20 0" VerticalAlignment="Top"
+                <Button Content="X" HorizontalAlignment="Right" Margin="0,13,20,0" VerticalAlignment="Top"
                         Width="30" Height="30" Background="DarkRed" BorderBrush="Black"
                         Grid.Column="2" Click="CloseButton_Click"/>
             </Grid>
 
-            
-            
+
+
             <TabControl Grid.Row="1" Margin="10">
                 <TabItem Header="Start">
 
@@ -62,7 +62,7 @@
                 </TabItem>
 
                 <!-- TAB FOR DISHES -->
-                <TabItem Header="Hantera maträtter">
+                <TabItem Header="Hantera maträtter" Height="20" VerticalAlignment="Top">
 
                     <Grid Background="#eee">
                         <Grid.ColumnDefinitions>
@@ -76,7 +76,6 @@
                             <TabItem Header="Lägg till">
                                 <Border Padding="10">
                                     <StackPanel>
-
 
                                     </StackPanel>
 
@@ -105,7 +104,6 @@
                             </TabItem>
                         </TabControl>
 
-
                         <!-- Available dishes -->
                         <Grid Grid.Column="1" Margin="10">
 
@@ -116,8 +114,20 @@
 
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="Available Dishes" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" Grid.Row="0" />
-                            <ListBox x:Name="AvailableDishes" Margin="0,26,0,0" Grid.RowSpan="2" />
+                            <TextBlock Text="Tillgängliga rätter" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" Grid.Row="0" />
+                            <ListBox x:Name="ListOfDishes" ItemsSource="{Binding FoodViewModel.FoodItems}" Margin="0,26,0,0" Grid.RowSpan="2">
+
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                            <TextBlock Text="{Binding Description}" />
+                                            <TextBlock Text="{Binding Price}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+                            </ListBox>
                         </Grid>
                     </Grid>
 
