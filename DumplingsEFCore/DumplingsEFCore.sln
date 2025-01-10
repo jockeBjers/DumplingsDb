@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumplingsEFCore", "DumplingsEFCore\DumplingsEFCore.csproj", "{08048FED-5C4B-4E29-9992-53CC559B0C31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DumplingsEFCore", "DumplingsEFCore\DumplingsEFCore.csproj", "{08048FED-5C4B-4E29-9992-53CC559B0C31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "publisherData", "publisherData\publisherData.csproj", "{C81E8490-BF39-40F9-AA5E-F852C90D1A19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "publisherData", "publisherData\publisherData.csproj", "{C81E8490-BF39-40F9-AA5E-F852C90D1A19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

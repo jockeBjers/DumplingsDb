@@ -1,12 +1,15 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace publisherData
 {
     public class PubContext : DbContext
     {
-        public DbSet<Author> Authors { get; set; }
-        public DbSet<Book> Books { get; set; }
+
+        public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Staff> Staff { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         /// <summary>
         /// Configures the database connection, bra för att lära sigg men ska inte hardkodas i vanliga projekt, använd config fil
@@ -15,30 +18,54 @@ namespace publisherData
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=DESKTOP-V7OGRKD;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=True;");
+                @"Server=DESKTOP-V7OGRKD;Database=DumplingDB;Trusted_Connection=True;TrustServerCertificate=True;");
         }
-
     }
 
-
-    public class Author
+    public class MenuItem
     {
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public List<Book> Books
-        { get; set; } = new List<Book>();
+        public string Name { get; set; }
+        public string Description { get; set; } 
+        public decimal Price { get; set; }
+        public string Category { get; set; } 
     }
 
-    public class Book
+    public class Order
     {
-        public int BookId { get; set; }
-        public string Title { get; set; }
-        public DateOnly PublishDate { get; set; }
-        public decimal BasePrice { get; set; }
-        public Author Author { get; set; }
-        public int AuthorId { get; set; }
+        public int Id { get; set; }
+        public DateTime OrderDate { get; set; }
+        public decimal TotalPrice { get; set; }
+        public int CustomerId { get; set; }  
+        public Customer? Customer { get; set; } 
+
+        public List<OrderItem> Items { get; set; } = new List<OrderItem>();
     }
 
+    public class OrderItem
+    {
+        public int Id { get; set; }
+        public int OrderId { get; set; }
+        public int MenuItemId { get; set; }
+        public int Quantity { get; set; }
 
+        public MenuItem MenuItem { get; set; }
+        public Order? Order { get; set; }
+    }
+
+    public class Customer
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Telephone { get; set; }
+        public List<Order> Orders { get; set; } = new List<Order>();
+    }
+
+    public class Staff
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Telephone { get; set; }
+        public string Role { get; set; }
+    }
 }
