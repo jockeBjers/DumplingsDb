@@ -39,5 +39,32 @@ namespace DumplingWPF
             }
         }
 
+        public void AddFoodItem(string name, string description, decimal price)
+        {
+            // Validate inputs
+            if (string.IsNullOrWhiteSpace(name) || price <= 0)
+            {
+                throw new ArgumentException("Name cannot be empty, and price must be greater than zero.");
+            }
+
+            // Create a new food item
+            var newFoodItem = new MenuItem
+            {
+                Name = name,
+                Description = description,
+                Price = price,
+                Category = "Food"
+            };
+
+            context.MenuItems.Add(newFoodItem);
+            context.SaveChanges();
+
+            
+            FoodItems.Add(newFoodItem);
+        }
+
+
+
+
     }
 }

@@ -53,5 +53,49 @@ namespace DumplingWPF
         {
             this.WindowState = WindowState.Minimized; // Minimizes
         }
+
+        private void AddFoodItem_Click(object sender, RoutedEventArgs e)
+        {
+            string name = DishTextBox.Text;
+            string description = DescriptionTextBox.Text;
+
+            if (name.Any(char.IsDigit))
+            {
+                MessageBox.Show("Name cannot contain numbers. Please enter a valid name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (decimal.TryParse(PriceTextBox.Text, out decimal price))
+            {
+                try
+                {
+                    FoodViewModel.AddFoodItem(name, description, price);
+
+                    // Clear input fields
+                    DishTextBox.Clear();
+                    DescriptionTextBox.Clear();
+                    PriceTextBox.Clear();
+
+                    MessageBox.Show($"Maträtt {name} tillagd med pris: {price}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid price. Please enter a valid decimal value.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void CancelFoodButton_Click(object sender, RoutedEventArgs e)
+        {
+            DishTextBox.Clear();
+            DescriptionTextBox.Clear();
+            PriceTextBox.Clear();
+
+        }
+
+
     }
 }
