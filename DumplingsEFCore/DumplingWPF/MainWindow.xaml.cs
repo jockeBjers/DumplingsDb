@@ -25,6 +25,7 @@ namespace DumplingWPF
         private readonly PubContext context;
         public FoodItemsViewModel FoodViewModel { get; set; }
 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +33,6 @@ namespace DumplingWPF
             FoodViewModel = new FoodItemsViewModel(context);
             DataContext = FoodViewModel;
 
-            DataContext = this;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -95,6 +95,42 @@ namespace DumplingWPF
             PriceTextBox.Clear();
 
         }
+
+        /* SEARCH AND UPDATE */
+        private void SearchDish_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var viewModel = (FoodItemsViewModel)DataContext;
+                if (!viewModel.SearchFoodItem())
+                {
+                    MessageBox.Show("Food item not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+
+        }
+
+        private void SaveChanges_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var viewModel = (FoodItemsViewModel)DataContext;
+                viewModel.UpdateFoodItem();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+                searchTextBox.Clear();
+                editNameTextBox.Clear();
+                editDescriptionTextBox.Clear();
+                editPriceTextBox.Clear();
+        }
+
 
 
     }
