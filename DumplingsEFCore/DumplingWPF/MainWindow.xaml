@@ -138,22 +138,14 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <Button Grid.Column="0" Content="Uppdatera"  Click="SaveChanges_Click" FontSize="16" Margin="0,5,5,0" Padding="5" />
+                                            <Button Grid.Column="0" Content="Uppdatera" Click="SaveChanges_Click" FontSize="16" Margin="0,5,5,0" Padding="5" />
+                                            <Button Grid.Column="1" Content="Ta bort" Click="RemoveFoodItem_Click" FontSize="16" Margin="5,5,0,0" Padding="5" />
                                         </Grid>
                                     </StackPanel>
                                 </Grid>
 
                             </TabItem>
-                            <!-- Remove dishes-->
-                            <TabItem Header="ta bort">
-                                <Border Padding="10">
-                                    <StackPanel>
-
-
-                                    </StackPanel>
-
-                                </Border>
-                            </TabItem>
+                         
                         </TabControl>
 
                         <!-- Available dishes -->

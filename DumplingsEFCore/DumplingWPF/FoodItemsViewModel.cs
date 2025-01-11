@@ -38,7 +38,6 @@ namespace DumplingWPF
             }
         }
 
-
         public void AddFoodItem(string name, string description, decimal price)
         {
             // Validate inputs
@@ -68,30 +67,6 @@ namespace DumplingWPF
 
         /* SEARCH AND UPDATE*/
 
-
-        public void UpdateFoodItem()
-        {
-            var item = context.MenuItems.FirstOrDefault(d =>
-                d.Name.Equals(SearchName.ToLower()) && d.Category == "Food");
-
-
-            if (item != null)
-            {
-                item.Name = EditName;
-                item.Description = EditDescription;
-                item.Price = EditPrice;
-
-                context.SaveChanges();
-                GetFoodItems(); // Refresh list
-            }
-            else
-            {
-                throw new InvalidOperationException("Food item not found for update.");
-            }
-
-        }
-
-
         public bool SearchFoodItem()
         {
             if (string.IsNullOrWhiteSpace(SearchName))
@@ -119,6 +94,46 @@ namespace DumplingWPF
             return false;
         }
 
+        public void UpdateFoodItem()
+        {
+            var item = context.MenuItems.FirstOrDefault(d =>
+                d.Name.Equals(SearchName.ToLower()) && d.Category == "Food");
+
+
+            if (item != null)
+            {
+                item.Name = EditName;
+                item.Description = EditDescription;
+                item.Price = EditPrice;
+
+                context.SaveChanges();
+                GetFoodItems(); 
+            }
+            else
+            {
+                throw new InvalidOperationException("Food item not found for update.");
+            }
+
+        }
+
+        public bool RemoveFoodItem()
+        {
+            
+            var item = context.MenuItems.FirstOrDefault(d =>
+                d.Name.Equals(SearchName.ToLower()) && d.Category == "Food");
+
+            if (item != null)
+            {
+                context.MenuItems.Remove(item);  
+                context.SaveChanges();           
+                GetFoodItems();                  
+                return true;                     
+            }
+            else
+            {
+                return false;                    
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -128,8 +143,6 @@ namespace DumplingWPF
         }
 
         public string SearchName { get; set; }
-
-        // Editable fields
         private string editName;
         public string EditName
         {
@@ -162,10 +175,5 @@ namespace DumplingWPF
                 OnPropertyChanged(nameof(EditPrice));
             }
         }
-
-
-
-
-
     }
 }

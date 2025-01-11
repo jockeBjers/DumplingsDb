@@ -118,6 +118,12 @@ namespace DumplingWPF
         {
             try
             {
+                // Show a confirmation dialog to the user
+                var result = MessageBox.Show(
+                 "Are you sure you want to update this food item?",
+                 "Confirm Update",
+                 MessageBoxButton.YesNo,
+                 MessageBoxImage.Question);
                 var viewModel = (FoodItemsViewModel)DataContext;
                 viewModel.UpdateFoodItem();
             }
@@ -130,6 +136,37 @@ namespace DumplingWPF
                 editDescriptionTextBox.Clear();
                 editPriceTextBox.Clear();
         }
+
+        /* REMOVE ITEM */
+        private void RemoveFoodItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Show a confirmation dialog to the user
+                var result = MessageBox.Show(
+                    "Are you sure you want to remove this food item?",
+                    "Confirm Removal",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    var viewModel = (FoodItemsViewModel)DataContext;
+
+                    // Call the RemoveFoodItem method in the ViewModel
+                    if (!viewModel.RemoveFoodItem())
+                    {
+                        MessageBox.Show("Food item not found or could not be removed.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+
 
 
 
