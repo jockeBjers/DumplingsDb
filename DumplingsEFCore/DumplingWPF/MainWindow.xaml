@@ -15,7 +15,7 @@
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="DarkRed" Offset="0.0" />
-                <GradientStop Color="black" Offset="1.0" />
+                <GradientStop Color="#170000" Offset="1.0" />
             </LinearGradientBrush>
         </Border.Background>
         <!-- MAIN GRID-->
@@ -36,23 +36,23 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                
+
                 <TextBlock Text="House of Dumplings" FontSize="40" FontWeight="Bold" Foreground="Gold"
                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" />
-                
+
                 <!-- Minimize Button -->
-                <Button Content="_" HorizontalAlignment="Right" Margin="0 0 5 0" VerticalAlignment="Top"
+                <Button Content="_" HorizontalAlignment="Right" Margin="0,13,5,0" VerticalAlignment="Top"
                         Width="30" Height="30" Background="DarkRed" BorderBrush="Black"
                         Grid.Column="1" Click="MinimizeButton_Click"/>
 
                 <!-- Close Button -->
-                <Button Content="X" HorizontalAlignment="Right" Margin="0 0 20 0" VerticalAlignment="Top"
+                <Button Content="X" HorizontalAlignment="Right" Margin="0,13,20,0" VerticalAlignment="Top"
                         Width="30" Height="30" Background="DarkRed" BorderBrush="Black"
                         Grid.Column="2" Click="CloseButton_Click"/>
             </Grid>
 
-            
-            
+
+
             <TabControl Grid.Row="1" Margin="10">
                 <TabItem Header="Start">
 
@@ -62,7 +62,7 @@
                 </TabItem>
 
                 <!-- TAB FOR DISHES -->
-                <TabItem Header="Hantera maträtter">
+                <TabItem Header="Hantera maträtter" Height="20" VerticalAlignment="Top">
 
                     <Grid Background="#eee">
                         <Grid.ColumnDefinitions>
@@ -76,6 +76,29 @@
                             <TabItem Header="Lägg till">
                                 <Border Padding="10">
                                     <StackPanel>
+
+                                        <TextBlock Text="Lägg till Maträtt" FontSize="30" FontWeight="Bold" Margin="0 10" />
+
+                                        <TextBlock Text="Maträtt" FontSize="20" />
+                                        <TextBox x:Name="DishTextBox" Padding="3" />
+
+                                        <TextBlock Text="Beskrivning" FontSize="20" />
+                                        <TextBox x:Name="DescriptionTextBox" Padding="3" />
+
+                                        <TextBlock Text="Pris" FontSize="20" />
+                                        <TextBox x:Name="PriceTextBox" Padding="3" />
+
+
+
+                                        <!-- Buttons to add-->
+                                        <Grid Margin="0 10 0 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Button Grid.Column="0" Content="Lägg till" Click="AddFoodItem_Click" Command="{Binding AddFoodItemCommand}" FontSize="16" Margin="0,5,5,0" Padding="5" />
+                                            <Button Grid.Column="1" Content="Ångra" Click="CancelFoodButton_Click" FontSize="16" Margin="5,5,0,0" Padding="5" />
+                                        </Grid>
 
 
                                     </StackPanel>
@@ -105,7 +128,6 @@
                             </TabItem>
                         </TabControl>
 
-
                         <!-- Available dishes -->
                         <Grid Grid.Column="1" Margin="10">
 
@@ -116,8 +138,20 @@
 
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="Available Dishes" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" Grid.Row="0" />
-                            <ListBox x:Name="AvailableDishes" Margin="0,26,0,0" Grid.RowSpan="2" />
+                            <TextBlock Text="Tillgängliga rätter" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" Grid.Row="0" />
+                            <ListBox x:Name="ListOfDishes" ItemsSource="{Binding FoodViewModel.FoodItems}" Margin="0,26,0,0" Grid.RowSpan="2">
+
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                            <TextBlock Text="{Binding Description}" />
+                                            <TextBlock Text="{Binding Price}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+                            </ListBox>
                         </Grid>
                     </Grid>
 
