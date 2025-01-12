@@ -100,6 +100,14 @@ namespace DumplingsEFCore
                 Console.WriteLine($"{drink.Name}, {drink.Description}, {drink.Category}, {drink.Price} kr");
             }
         }
+
+        public static void CloseProgram() // the program closes the environment.
+        {
+            Console.Clear();
+            Console.WriteLine("Programmet kommer att avslutas!");
+            Console.ReadLine();
+            Environment.Exit(0);
+        }
     }
 }
 
