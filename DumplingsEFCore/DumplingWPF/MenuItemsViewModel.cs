@@ -13,18 +13,19 @@ using MenuItem = publisherData.MenuItem;
 
 namespace DumplingWPF
 {
-
-
-    public class FoodItemsViewModel : INotifyPropertyChanged
+    public class MenuItemsViewModel : INotifyPropertyChanged
     {
         private readonly PubContext context;
         public ObservableCollection<MenuItem> FoodItems { get; set; }
+        public ObservableCollection<MenuItem> DrinkItems { get; set; }
 
-        public FoodItemsViewModel(PubContext _context)
+        public MenuItemsViewModel(PubContext _context)
         {
             context = _context;
             FoodItems = new ObservableCollection<MenuItem>();
+            DrinkItems = new ObservableCollection<MenuItem>();
             GetFoodItems();
+            GetDrinkItems();
         }
 
 
@@ -35,6 +36,16 @@ namespace DumplingWPF
             foreach (var dish in foodItems)
             {
                 FoodItems.Add(dish);
+            }
+        }
+
+        void GetDrinkItems()
+        {
+            var drinkItems = context.MenuItems.Where(d => d.Category == "Drink").ToList();
+            DrinkItems.Clear();
+            foreach (var dish in drinkItems)
+            {
+                DrinkItems.Add(dish);
             }
         }
 
@@ -62,6 +73,30 @@ namespace DumplingWPF
             FoodItems.Add(newFoodItem);
         }
 
+        public void AddDrinkItem(string name, string description, decimal price)
+        {
+            // Validate inputs
+            if (string.IsNullOrWhiteSpace(name) || price <= 0)
+            {
+                throw new ArgumentException("Name cannot be empty, and price must be greater than zero.");
+            }
+
+            // Create a new food item
+            var newDrinkItem = new MenuItem
+            {
+                Name = name,
+                Description = description,
+                Price = price,
+                Category = "Drink"
+            };
+
+            context.MenuItems.Add(newDrinkItem);
+            context.SaveChanges();
+
+
+            DrinkItems.Add(newDrinkItem);
+        }
+
 
 
 
@@ -75,7 +110,7 @@ namespace DumplingWPF
             }
 
             var item = context.MenuItems.FirstOrDefault(d =>
-                d.Name.Equals(SearchName.ToLower()) && d.Category == "Food");
+                d.Name.Equals(SearchName.ToLower()) );
 
             if (item != null)
             {
@@ -97,7 +132,7 @@ namespace DumplingWPF
         public void UpdateFoodItem()
         {
             var item = context.MenuItems.FirstOrDefault(d =>
-                d.Name.Equals(SearchName.ToLower()) && d.Category == "Food");
+                d.Name.Equals(SearchName.ToLower()) );
 
 
             if (item != null)
@@ -107,7 +142,8 @@ namespace DumplingWPF
                 item.Price = EditPrice;
 
                 context.SaveChanges();
-                GetFoodItems(); 
+                GetFoodItems();
+                GetDrinkItems();
             }
             else
             {
@@ -118,20 +154,21 @@ namespace DumplingWPF
 
         public bool RemoveFoodItem()
         {
-            
+
             var item = context.MenuItems.FirstOrDefault(d =>
-                d.Name.Equals(SearchName.ToLower()) && d.Category == "Food");
+                d.Name.Equals(SearchName.ToLower()) );
 
             if (item != null)
             {
-                context.MenuItems.Remove(item);  
-                context.SaveChanges();           
-                GetFoodItems();                  
-                return true;                     
+                context.MenuItems.Remove(item);
+                context.SaveChanges();
+                GetFoodItems();
+                GetDrinkItems();
+                return true;
             }
             else
             {
-                return false;                    
+                return false;
             }
         }
 

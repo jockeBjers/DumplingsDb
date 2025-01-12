@@ -23,14 +23,14 @@ namespace DumplingWPF
     public partial class MainWindow : Window
     {
         private readonly PubContext context;
-        public FoodItemsViewModel FoodViewModel { get; set; }
+        public MenuItemsViewModel FoodViewModel { get; set; }
 
 
         public MainWindow()
         {
             InitializeComponent();
             context = new PubContext();
-            FoodViewModel = new FoodItemsViewModel(context);
+            FoodViewModel = new MenuItemsViewModel(context);
             DataContext = FoodViewModel;
 
         }
@@ -88,12 +88,51 @@ namespace DumplingWPF
                 MessageBox.Show("Invalid price. Please enter a valid decimal value.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void AddDrinkItem_Click(object sender, RoutedEventArgs e)
+        {
+            string name = DrinkTextBox.Text;
+            string description = DrinkDescriptionTextBox.Text;
+
+            if (name.Any(char.IsDigit))
+            {
+                MessageBox.Show("Name cannot contain numbers. Please enter a valid name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (decimal.TryParse(DrinkPriceTextBox.Text, out decimal price))
+            {
+                try
+                {
+                    FoodViewModel.AddDrinkItem(name, description, price);
+
+                    // Clear input fields
+                    DrinkTextBox.Clear();
+                    DrinkDescriptionTextBox.Clear();
+                    DrinkPriceTextBox.Clear();
+
+                    MessageBox.Show($"Dryck {name} tillagd med pris: {price}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid price. Please enter a valid decimal value.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
         private void CancelFoodButton_Click(object sender, RoutedEventArgs e)
         {
             DishTextBox.Clear();
             DescriptionTextBox.Clear();
             PriceTextBox.Clear();
-
+            DrinkTextBox.Clear();
+            DrinkDescriptionTextBox.Clear();
+            DrinkPriceTextBox.Clear();
         }
 
         /* SEARCH AND UPDATE */
@@ -101,7 +140,7 @@ namespace DumplingWPF
         {
             try
             {
-                var viewModel = (FoodItemsViewModel)DataContext;
+                var viewModel = (MenuItemsViewModel)DataContext;
                 if (!viewModel.SearchFoodItem())
                 {
                     MessageBox.Show("Food item not found.");
@@ -124,17 +163,20 @@ namespace DumplingWPF
                  "Confirm Update",
                  MessageBoxButton.YesNo,
                  MessageBoxImage.Question);
-                var viewModel = (FoodItemsViewModel)DataContext;
+                var viewModel = (MenuItemsViewModel)DataContext;
                 viewModel.UpdateFoodItem();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}");
             }
-                searchTextBox.Clear();
-                editNameTextBox.Clear();
-                editDescriptionTextBox.Clear();
-                editPriceTextBox.Clear();
+            searchTextBox.Clear();
+            editNameTextBox.Clear();
+            editDescriptionTextBox.Clear();
+            editPriceTextBox.Clear();
+            editDrinkNameTextBox.Clear();
+            editDrinkDescriptionTextBox.Clear();
+            editDrinkPriceTextBox.Clear();
         }
 
         /* REMOVE ITEM */
@@ -151,7 +193,7 @@ namespace DumplingWPF
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    var viewModel = (FoodItemsViewModel)DataContext;
+                    var viewModel = (MenuItemsViewModel)DataContext;
 
                     // Call the RemoveFoodItem method in the ViewModel
                     if (!viewModel.RemoveFoodItem())
