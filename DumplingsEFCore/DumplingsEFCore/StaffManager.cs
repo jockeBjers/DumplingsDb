@@ -91,7 +91,7 @@ namespace DumplingsEFCore
             Console.WriteLine("Personal tillagd!");
         }
 
-        public Staff searchForStaff()
+        public Staff SearchForStaff()
         {
             string updateStaff = InputHelper.GetUserInput<string>("Ange namn på den personal du vill hitta: ");
             var person = context.Staff.FirstOrDefault(p => p.Name.ToLower().Equals(updateStaff.ToLower()));
@@ -104,7 +104,7 @@ namespace DumplingsEFCore
 
         public void UpdateStaff()
         {
-            var person = searchForStaff();
+            var person = SearchForStaff();
             Console.WriteLine($"Uppdatera {person.Name}: ");
             person.Name = InputHelper.GetUserInput<string>("Namn:");
             person.Telephone = InputHelper.GetUserInput<string>("Telefon:");
@@ -116,7 +116,7 @@ namespace DumplingsEFCore
 
         public void RemoveStaff()
         {
-            var person = searchForStaff();
+            var person = SearchForStaff();
 
             context.Staff.Remove(person);
             context.SaveChanges();

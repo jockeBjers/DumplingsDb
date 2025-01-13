@@ -70,6 +70,7 @@ namespace DumplingsEFCore
                 .Include(o => o.Customer)
                 .Include(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
+                .OrderBy(o => o.Id)
                 .ToList();
 
             foreach (var order in orders)
@@ -102,19 +103,33 @@ namespace DumplingsEFCore
         public void AddOrder()
         {
             Console.Clear();
-            Console.WriteLine("Lägg till en ny kund: ");
+            Console.WriteLine("Lägg till en ny order:");
+
+            // Search for existing customer
             string customerName = InputHelper.GetUserInput<string>("Ange kundens namn: ");
             string customerPhone = InputHelper.GetUserInput<string>("Ange kundens telefonnummer: ");
 
-            var newCustomer = new Customer
-            {
-                Name = customerName,
-                Telephone = customerPhone,
+            var existingCustomer = context.Customers.FirstOrDefault(c =>
+                c.Name.ToLower().Equals(customerName.ToLower()) &&
+                c.Telephone == customerPhone);
 
-            };
-            context.Customers.Add(newCustomer);
-            context.SaveChanges();
-            Console.WriteLine($"Ny kund {newCustomer.Name} (ID: {newCustomer.Id}) har lagts till");
+            Customer customer;
+            if (existingCustomer != null)
+            {
+                customer = existingCustomer;
+                Console.WriteLine($"Existerande kund hittad: {customer.Name} (ID: {customer.Id})");
+            }
+            else
+            {
+                customer = new Customer
+                {
+                    Name = customerName,
+                    Telephone = customerPhone
+                };
+                context.Customers.Add(customer);
+                context.SaveChanges();
+                Console.WriteLine($"Ny kund {customer.Name} (ID: {customer.Id}) har lagts till");
+            }
 
             Console.WriteLine("Här är menyn");
             var menu = new MenuManager(context);
@@ -123,8 +138,8 @@ namespace DumplingsEFCore
             var newOrder = new Order
             {
 
-                CustomerId = newCustomer.Id,
-                Customer = newCustomer,
+                CustomerId = customer.Id,
+                Customer = customer,
                 OrderDate = DateTime.Now,
 
             };
@@ -166,7 +181,7 @@ namespace DumplingsEFCore
             context.Orders.Add(newOrder);
             context.SaveChanges();
 
-            Console.WriteLine($"\nNy order har lagts till för: {newCustomer.Name}, totalt pris: {newOrder.TotalPrice}");
+            Console.WriteLine($"\nNy order har lagts till för: {customer.Name}, totalt pris: {newOrder.TotalPrice}");
         }
 
         /* UPDATE */

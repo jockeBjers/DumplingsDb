@@ -8,7 +8,7 @@ namespace DumplingsEFCore
         private static MenuManager menuManager;
         private static OrderManager orderManager;
         private static StaffManager staffManager;
-
+        private static CustomerManager customerManager;
 
         static void Main(string[] args)
         {
@@ -17,6 +17,7 @@ namespace DumplingsEFCore
             orderManager = new OrderManager(context);
             menuManager = new MenuManager(context);
             staffManager = new StaffManager(context);
+            customerManager = new CustomerManager(context);
             StartMenu();
         }
         public static void StartMenu()
@@ -49,6 +50,7 @@ namespace DumplingsEFCore
                         staffManager.StartMenu();
                         break;
                     case "5":
+                        customerManager.StartMenu();
                         break;
                     case "6":
                         exit = true;
