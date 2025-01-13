@@ -5,14 +5,19 @@ namespace DumplingsEFCore
     {
         private static PubContext context = new PubContext();
 
-        private static MenuItems menuItems;
+        private static MenuManager menuManager;
+        private static OrderManager orderManager;
+        private static StaffManager staffManager;
+        private static CustomerManager customerManager;
 
         static void Main(string[] args)
         {
 
             context.Database.EnsureCreated(); // ensure db is created
-
-            menuItems = new MenuItems(context);
+            orderManager = new OrderManager(context);
+            menuManager = new MenuManager(context);
+            staffManager = new StaffManager(context);
+            customerManager = new CustomerManager(context);
             StartMenu();
         }
         public static void StartMenu()
@@ -36,13 +41,16 @@ namespace DumplingsEFCore
                     case "1":
                         break;
                     case "2":
-                        menuItems.StartMenu();
+                        menuManager.StartMenu();
                         break;
                     case "3":
+                        orderManager.StartMenu();
                         break;
                     case "4":
+                        staffManager.StartMenu();
                         break;
                     case "5":
+                        customerManager.StartMenu();
                         break;
                     case "6":
                         exit = true;
@@ -54,6 +62,7 @@ namespace DumplingsEFCore
                 }
             }
         }
+
 
         public static void AddDrinks()
         {
@@ -75,14 +84,13 @@ namespace DumplingsEFCore
                 new MenuItem{ Name = "Chicken dumplings", Description = "Kyckling och thaibasilika", Category = "Food", Price = 4 },
                 new MenuItem{ Name = "Shrimp dumplings", Description = "Dumplings med räka", Category = "Food", Price = 4 },
                 new MenuItem{ Name = "mushroom dumplings", Description = "Vegetarianskt", Category = "Food", Price = 4 },
-                new MenuItem{ Name = "spicy pork dumplings", Description = "För er som tycker om lite mer hetta", Category = "Food", Price = 4 },
-                new MenuItem{ Name = "Trocadero", Description = "Soda", Category = "Food", Price = 4 }
+                new MenuItem{ Name = "spicy pork dumplings", Description = "För er som tycker om lite mer hetta", Category = "Food", Price = 4 }
                 };
             context.MenuItems.AddRange(newFoodItems);
             context.SaveChanges();
         }
 
-        void AddStaff()
+        public static void AddStaff()
         {
             var newStaff = new List<Staff>
                 {
@@ -90,6 +98,8 @@ namespace DumplingsEFCore
                     new Staff{Name = "Jesper Wallentin", Telephone= "0701104455", Role ="Chef"},
                     new Staff{Name = "Joakim Bjerselius", Telephone= "0701104198", Role ="Manager"}
                 };
+            context.Staff.AddRange(newStaff);
+            context.SaveChanges();
         }
 
         void GetDrinks()
@@ -108,6 +118,7 @@ namespace DumplingsEFCore
             Console.ReadLine();
             Environment.Exit(0);
         }
+
     }
 }
 

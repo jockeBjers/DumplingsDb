@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using publisherData;
 namespace DumplingsEFCore
 {
-    public class MenuItems
+    public class MenuManager
     {
 
         private readonly PubContext context;
 
-        public MenuItems(PubContext _context)
+        public MenuManager(PubContext _context)
         {
             context = _context;
         }
@@ -23,7 +23,7 @@ namespace DumplingsEFCore
             {
 
                 string choice = InputHelper.GetUserInput<string>(
-                    "Välkommen, här kan du hantera din databas\n" +
+                    "Välkommen, här kan du hantera din meny\n" +
                     "1: Printa ut alla maträtter/dryck\n" +
                     "2: Lägg till maträtt/dryck\n" +
                     "3: Uppdatera maträtt/dryck\n" +
@@ -148,7 +148,7 @@ namespace DumplingsEFCore
         {
             string name = InputHelper.GetUserInput<string>("Skriv i namnet på vad du vill hitta");
 
-            var item = context.MenuItems.FirstOrDefault(d => d.Name == name);
+            var item = context.MenuItems.FirstOrDefault(d => d.Name.ToLower().Equals(name.ToLower()));
 
             if (item == null)
             {

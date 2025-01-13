@@ -55,7 +55,7 @@
 
             <TabControl Grid.Row="1" Margin="10">
                 <TabItem Header="Start">
-
+                    
                 </TabItem>
                 <TabItem Header="Ordrar">
 
@@ -296,8 +296,7 @@
                 <TabItem Header="Personal">
 
                 </TabItem>
-
-
+         
             </TabControl>
         </Grid>
     </Border>
