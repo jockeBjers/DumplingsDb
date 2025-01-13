@@ -7,6 +7,7 @@ namespace DumplingsEFCore
 
         private static MenuManager menuManager;
         private static OrderManager orderManager;
+        private static StaffManager staffManager;
 
 
         static void Main(string[] args)
@@ -15,7 +16,7 @@ namespace DumplingsEFCore
             context.Database.EnsureCreated(); // ensure db is created
             orderManager = new OrderManager(context);
             menuManager = new MenuManager(context);
-
+            staffManager = new StaffManager(context);
             StartMenu();
         }
         public static void StartMenu()
@@ -45,6 +46,7 @@ namespace DumplingsEFCore
                         orderManager.StartMenu();
                         break;
                     case "4":
+                        staffManager.StartMenu();
                         break;
                     case "5":
                         break;
@@ -86,7 +88,7 @@ namespace DumplingsEFCore
             context.SaveChanges();
         }
 
-        void AddStaff()
+        public static void AddStaff()
         {
             var newStaff = new List<Staff>
                 {
@@ -94,6 +96,8 @@ namespace DumplingsEFCore
                     new Staff{Name = "Jesper Wallentin", Telephone= "0701104455", Role ="Chef"},
                     new Staff{Name = "Joakim Bjerselius", Telephone= "0701104198", Role ="Manager"}
                 };
+            context.Staff.AddRange(newStaff);
+            context.SaveChanges();
         }
 
         void GetDrinks()
