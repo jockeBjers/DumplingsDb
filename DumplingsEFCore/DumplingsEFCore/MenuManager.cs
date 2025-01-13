@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using publisherData;
 namespace DumplingsEFCore
 {
-    public class MenuItems
+    public class MenuManager
     {
 
         private readonly PubContext context;
 
-        public MenuItems(PubContext _context)
+        public MenuManager(PubContext _context)
         {
             context = _context;
         }

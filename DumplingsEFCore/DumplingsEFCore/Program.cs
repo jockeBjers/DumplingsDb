@@ -5,14 +5,17 @@ namespace DumplingsEFCore
     {
         private static PubContext context = new PubContext();
 
-        private static MenuItems menuItems;
+        private static MenuManager menuManager;
+        private static OrderManager orderManager;
+
 
         static void Main(string[] args)
         {
 
             context.Database.EnsureCreated(); // ensure db is created
+            orderManager = new OrderManager(context);
+            menuManager = new MenuManager(context);
 
-            menuItems = new MenuItems(context);
             StartMenu();
         }
         public static void StartMenu()
@@ -36,9 +39,10 @@ namespace DumplingsEFCore
                     case "1":
                         break;
                     case "2":
-                        menuItems.StartMenu();
+                        menuManager.StartMenu();
                         break;
                     case "3":
+                        orderManager.StartMenu();
                         break;
                     case "4":
                         break;
@@ -54,6 +58,7 @@ namespace DumplingsEFCore
                 }
             }
         }
+
 
         public static void AddDrinks()
         {
@@ -75,8 +80,7 @@ namespace DumplingsEFCore
                 new MenuItem{ Name = "Chicken dumplings", Description = "Kyckling och thaibasilika", Category = "Food", Price = 4 },
                 new MenuItem{ Name = "Shrimp dumplings", Description = "Dumplings med räka", Category = "Food", Price = 4 },
                 new MenuItem{ Name = "mushroom dumplings", Description = "Vegetarianskt", Category = "Food", Price = 4 },
-                new MenuItem{ Name = "spicy pork dumplings", Description = "För er som tycker om lite mer hetta", Category = "Food", Price = 4 },
-                new MenuItem{ Name = "Trocadero", Description = "Soda", Category = "Food", Price = 4 }
+                new MenuItem{ Name = "spicy pork dumplings", Description = "För er som tycker om lite mer hetta", Category = "Food", Price = 4 }
                 };
             context.MenuItems.AddRange(newFoodItems);
             context.SaveChanges();
@@ -108,6 +112,7 @@ namespace DumplingsEFCore
             Console.ReadLine();
             Environment.Exit(0);
         }
+
     }
 }
 
