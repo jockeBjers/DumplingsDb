@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="DumplingWPF.OrderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DumplingWPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Background="#eee">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Incoming Orders Section -->
+        <Grid Grid.Column="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Title -->
+            <TextBlock Text="Inkommande ordrar" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" Grid.Row="0" />
+
+            <!-- ListBox -->
+            <ListBox Grid.Row="1" x:Name="IncomingOrdersListBox" ItemsSource="{Binding IncomingOrders}"  MouseDoubleClick="IncomingOrdersListBox_MouseDoubleClick" Margin="0,10">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10">
+                            <TextBlock Text="{Binding Id, StringFormat=Beställnings-ID: {0}}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Customer.Name, StringFormat=Kund: {0}}" />
+                            <TextBlock Text="{Binding Customer.Telephone, StringFormat=Telefon: {0}}" />
+                            <TextBlock Text="{Binding OrderDate, StringFormat=Datum: {0:dd MMM yyyy}}" />
+                            <TextBlock Text="{Binding TotalPrice, StringFormat=Totalt Pris: {0} kr}" />
+                            <TextBlock Text="Artikel:" FontWeight="Bold" Margin="0,5,0,0" />
+                            <ItemsControl ItemsSource="{Binding Items}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                        <Run Text="{Binding MenuItem.Name}" />
+                                        <Run Text=" (Antal: " />
+                                        <Run Text="{Binding Quantity}" />
+                                        <Run Text=")" />
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!-- buttons -->
+            <Grid Grid.Row="2" Margin="0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!-- Button to Move to In Progress -->
+                <Button Content="Flytta till Pågående" Click="MoveToInProgress_Click" Margin="0,10" HorizontalAlignment="Center" Width="150" Grid.Column="0"  />
+                <!-- Button to manually refresh orders -->
+                <Button Content="Uppdatera orderlista" Click="RefreshOrders_Click" Margin="0,10" HorizontalAlignment="Center" Width="150" Grid.Column="1" />
+
+            </Grid>
+        </Grid>
+
+        <!-- In Progress Orders Section -->
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Title -->
+            <TextBlock Text="Pågående Beställningar" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" Grid.Row="0" />
+
+            <!-- ListBox -->
+            <ListBox Grid.Row="1" x:Name="InProgressOrdersListBox" ItemsSource="{Binding InProgressOrders}" Margin="0,10">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10">
+                            <TextBlock Text="{Binding Id, StringFormat=Beställnings-ID: {0}}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Customer.Name, StringFormat=Kund: {0}}" />
+                            <TextBlock Text="{Binding Customer.Telephone, StringFormat=Telefon: {0}}" />
+                            <TextBlock Text="{Binding OrderDate, StringFormat=Datum: {0:dd MMM yyyy}}" />
+                            <TextBlock Text="{Binding TotalPrice, StringFormat=Totalt Pris: {0} kr}" />
+                            <TextBlock Text="Artikel:" FontWeight="Bold" Margin="0,5,0,0" />
+                            <ItemsControl ItemsSource="{Binding Items}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                        <Run Text="{Binding MenuItem.Name}" />
+                                        <Run Text=" (antal: " />
+                                        <Run Text="{Binding Quantity}" />
+                                        <Run Text=")" />
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!-- Button to Mark as Completed -->
+            <Button Content="Markera som Slutförd" Click="MarkAsDone_Click" Margin="0,10" HorizontalAlignment="Center" Width="150" Grid.Row="2" />
+        </Grid>
+    </Grid>
+
+</UserControl>
