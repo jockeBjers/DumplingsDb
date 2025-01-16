@@ -49,12 +49,13 @@ namespace DumplingWPF
             }
         }
 
-/* Removes the item from the list */
+        /* Removes the item from the list */
         private void MarkAsDone_Click(object sender, RoutedEventArgs e)
         {
             var selectedOrder = (Order)InProgressOrdersListBox.SelectedItem;
             if (selectedOrder != null)
             {
+                selectedOrder.IsCompleted = true;
                 _viewModel.MarkAsDone(selectedOrder);
             }
         }

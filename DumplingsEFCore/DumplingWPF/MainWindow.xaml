@@ -57,7 +57,7 @@
                 <TabItem Header="Start">
 
                 </TabItem>
-                 <!-- TAB FOR ORDERS -->
+                <!-- TAB FOR ORDERS -->
                 <TabItem Header="Ordrar">
                     <local:OrderView />
                 </TabItem>

@@ -34,6 +34,7 @@ namespace DumplingWPF
                 .Include(o => o.Customer)
                 .Include(o => o.Items)
                     .ThenInclude(oi => oi.MenuItem)
+                .Where(o => !o.IsCompleted)
                 .ToList();
 
             foreach (var order in orders)
@@ -55,6 +56,13 @@ namespace DumplingWPF
         /* Removes from in progress list */
         public void MarkAsDone(Order order)
         {
+            if (order == null) return;
+
+            // Mark as completed
+            order.IsCompleted = true;
+
+            _dbContext.Orders.Update(order);
+            _dbContext.SaveChanges();
             InProgressOrders.Remove(order);
         }
     }
