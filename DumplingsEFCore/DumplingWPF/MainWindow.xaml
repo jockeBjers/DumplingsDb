@@ -55,7 +55,7 @@
 
             <TabControl Grid.Row="1" Margin="10">
                 <TabItem Header="Start">
-                    
+
                 </TabItem>
                 <TabItem Header="Ordrar">
 
@@ -63,240 +63,22 @@
 
                 <!-- TAB FOR DISHES -->
                 <TabItem Header="Hantera maträtter" Height="20" VerticalAlignment="Top">
-
-                    <Grid Background="#eee">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TabControl Grid.Column="0" Grid.Row="1" Margin="10,10,10,10" Height="432">
-
-
-                            <!-- Add dishes-->
-                            <TabItem Header="Lägg till">
-                                <Border Padding="10">
-                                    <StackPanel>
-
-                                        <TextBlock Text="Lägg till Maträtt" FontSize="30" FontWeight="Bold" Margin="0 10" />
-
-                                        <TextBlock Text="Maträtt" FontSize="20" />
-                                        <TextBox x:Name="DishTextBox" Text="{Binding DishName}" Padding="3" />
-
-                                        <TextBlock Text="Beskrivning" FontSize="20" />
-                                        <TextBox x:Name="DescriptionTextBox" Text="{Binding Description}" Padding="3" />
-
-                                        <TextBlock Text="Pris" FontSize="20" />
-                                        <TextBox x:Name="PriceTextBox" Text="{Binding Price}" Padding="3" />
-
-
-
-                                        <!-- Buttons to add-->
-                                        <Grid Margin="0 10 0 0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Button Grid.Column="0" Content="Lägg till" Click="AddFoodItem_Click" FontSize="16" Margin="0,5,5,0" Padding="5" />
-                                            <Button Grid.Column="1" Content="Ångra" Click="CancelFoodButton_Click" FontSize="16" Margin="5,5,0,0" Padding="5" />
-                                        </Grid>
-
-
-                                    </StackPanel>
-
-                                </Border>
-                            </TabItem>
-
-                            <!-- Update dishes-->
-                            <TabItem Header="Ändra">
-                                <Grid Margin="10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-
-                                    <!-- Search Section -->
-                                    <StackPanel Grid.Row="0" Orientation="Horizontal">
-                                        <TextBox Width="200" x:Name="searchTextBox" Text="{Binding SearchName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0" />
-                                        <Button Content="Search" Width="100" Click="SearchDish_Click" />
-                                    </StackPanel>
-
-                                    <!-- Edit Section -->
-                                    <StackPanel Grid.Row="1" Margin="0,0,0,48" Grid.RowSpan="2">
-                                        <TextBlock Text="Ändra maträtt" FontSize="30" FontWeight="Bold" Margin="0,10" />
-
-                                        <TextBlock Text="Maträtt:" FontSize="20"/>
-                                        <TextBox  x:Name="editNameTextBox" Text="{Binding EditName}" Padding="3" />
-
-                                        <TextBlock Text="Beskrivning:" FontSize="20"/>
-                                        <TextBox  x:Name="editDescriptionTextBox" Text="{Binding EditDescription}" Padding="3"/>
-
-                                        <TextBlock Text="Pris:" FontSize="20"/>
-                                        <TextBox  x:Name="editPriceTextBox" Text="{Binding EditPrice}" Padding="3"/>
-
-                                        <Grid Margin="0 10 0 0" Grid.Row="2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Button Grid.Column="0" Content="Uppdatera" Click="SaveChanges_Click" FontSize="16" Margin="0,5,5,0" Padding="5" />
-                                            <Button Grid.Column="1" Content="Ta bort" Click="RemoveFoodItem_Click" FontSize="16" Margin="5,5,0,0" Padding="5" />
-                                        </Grid>
-                                    </StackPanel>
-                                </Grid>
-
-                            </TabItem>
-
-                        </TabControl>
-
-                        <!-- Available dishes -->
-                        <Grid Grid.Column="1" Margin="10">
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-
-                                <RowDefinition Height="*" />
-
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Text="Tillgängliga rätter" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" Grid.Row="0" />
-                            <ListBox x:Name="ListOfDishes" ItemsSource="{Binding FoodItems}" Margin="0,26,0,0" Grid.RowSpan="2">
-
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-                                            <TextBlock Text="{Binding Description}" />
-                                            <TextBlock Text="{Binding Price}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-
-                            </ListBox>
-                        </Grid>
-                    </Grid>
-
+                    <local:FoodView />
                 </TabItem>
 
                 <!-- TAB FOR DRINKS-->
                 <TabItem Header="Hantera Drycker" Height="20" VerticalAlignment="Top">
-
-                    <Grid Background="#eee">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TabControl Grid.Column="0" Grid.Row="1" Margin="10,10,10,10" Height="432">
-
-                            <TabItem Header="Lägg till">
-                                <Border Padding="10">
-                                    <StackPanel>
-
-                                        <TextBlock Text="Lägg till dryck" FontSize="30" FontWeight="Bold" Margin="0 10" />
-
-                                        <TextBlock Text="dryck" FontSize="20" />
-                                        <TextBox x:Name="DrinkTextBox" Text="{Binding DishName}" Padding="3" />
-
-                                        <TextBlock Text="Beskrivning" FontSize="20" />
-                                        <TextBox x:Name="DrinkDescriptionTextBox" Text="{Binding Description}" Padding="3" />
-
-                                        <TextBlock Text="Pris" FontSize="20" />
-                                        <TextBox x:Name="DrinkPriceTextBox" Text="{Binding Price}" Padding="3" />
-
-
-
-                                        <!-- Buttons to add-->
-                                        <Grid Margin="0 10 0 0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Button Grid.Column="0" Content="Lägg till" Click="AddDrinkItem_Click" FontSize="16" Margin="0,5,5,0" Padding="5" />
-                                            <Button Grid.Column="1" Content="Ångra" Click="CancelFoodButton_Click" FontSize="16" Margin="5,5,0,0" Padding="5" />
-                                        </Grid>
-
-
-                                    </StackPanel>
-
-                                </Border>
-                            </TabItem>
-                            <!-- Update dishes-->
-                            <TabItem Header="Ändra">
-                                <Grid Margin="10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-
-                                    <!-- Search Section -->
-                                    <StackPanel Grid.Row="0" Orientation="Horizontal">
-                                        <TextBox Width="200" x:Name="searchDrinkTextBox" Text="{Binding SearchName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0" />
-                                        <Button Content="Search" Width="100" Click="SearchDish_Click" />
-                                    </StackPanel>
-
-                                    <!-- Edit Section -->
-                                    <StackPanel Grid.Row="1" Margin="0,0,0,48" Grid.RowSpan="2">
-                                        <TextBlock Text="Ändra Dryck" FontSize="30" FontWeight="Bold" Margin="0,10" />
-
-                                        <TextBlock Text="Dryck:" FontSize="20"/>
-                                        <TextBox  x:Name="editDrinkNameTextBox" Text="{Binding EditName}" Padding="3" />
-
-                                        <TextBlock Text="Beskrivning:" FontSize="20"/>
-                                        <TextBox  x:Name="editDrinkDescriptionTextBox" Text="{Binding EditDescription}" Padding="3"/>
-
-                                        <TextBlock Text="Pris:" FontSize="20"/>
-                                        <TextBox  x:Name="editDrinkPriceTextBox" Text="{Binding EditPrice}" Padding="3"/>
-
-                                        <Grid Margin="0 10 0 0" Grid.Row="2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Button Grid.Column="0" Content="Uppdatera" Click="SaveChanges_Click" FontSize="16" Margin="0,5,5,0" Padding="5" />
-                                            <Button Grid.Column="1" Content="Ta bort" Click="RemoveFoodItem_Click" FontSize="16" Margin="5,5,0,0" Padding="5" />
-                                        </Grid>
-                                    </StackPanel>
-                                </Grid>
-
-                            </TabItem>
-
-
-                        </TabControl>
-                        <!-- Available dishes -->
-                        <Grid Grid.Column="1" Margin="10">
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-
-                                <RowDefinition Height="*" />
-
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Text="Tillgängliga drycker" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" Grid.Row="0" />
-                            <ListBox x:Name="ListOfDrinks" ItemsSource="{Binding DrinkItems}" Margin="0,26,0,0" Grid.RowSpan="2">
-
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-                                            <TextBlock Text="{Binding Description}" />
-                                            <TextBlock Text="{Binding Price}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-
-                            </ListBox>
-                        </Grid>
-
-
-                    </Grid>
+                    <local:DrinkView />
                 </TabItem>
+                
+                
                 <TabItem Header="Kundhistorik">
 
                 </TabItem>
                 <TabItem Header="Personal">
 
                 </TabItem>
-         
+
             </TabControl>
         </Grid>
     </Border>
