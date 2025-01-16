@@ -57,8 +57,9 @@
                 <TabItem Header="Start">
 
                 </TabItem>
+                 <!-- TAB FOR ORDERS -->
                 <TabItem Header="Ordrar">
-
+                    <local:OrderView />
                 </TabItem>
 
                 <!-- TAB FOR DISHES -->
@@ -70,8 +71,8 @@
                 <TabItem Header="Hantera Drycker" Height="20" VerticalAlignment="Top">
                     <local:DrinkView />
                 </TabItem>
-                
-                
+
+
                 <TabItem Header="Kundhistorik">
 
                 </TabItem>
