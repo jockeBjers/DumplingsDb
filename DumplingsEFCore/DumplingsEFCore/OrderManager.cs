@@ -78,7 +78,7 @@ namespace DumplingsEFCore
 
                 decimal calculatedTotalPrice = order.Items.Sum(item => item.MenuItem.Price * item.Quantity);
 
-
+                /* Update total price if necessary */
                 if (order.TotalPrice != calculatedTotalPrice)
                 {
                     order.TotalPrice = calculatedTotalPrice;
@@ -87,6 +87,7 @@ namespace DumplingsEFCore
                 Console.WriteLine($"Order ID: {order.Id}, Datum: {order.OrderDate}, Totalpris: {order.TotalPrice}");
                 Console.WriteLine($"Kund: {order.Customer?.Name ?? "Okänd kund"}");
 
+                /* prints out the items in the order */
                 foreach (var item in order.Items)
                 {
                     Console.WriteLine($"  - {item.MenuItem.Name} x{item.Quantity} ({item.MenuItem.Price} styck)");
@@ -109,6 +110,7 @@ namespace DumplingsEFCore
             string customerName = InputHelper.GetUserInput<string>("Ange kundens namn: ");
             string customerPhone = InputHelper.GetUserInput<string>("Ange kundens telefonnummer: ");
 
+            /* Check if the customer already exists */
             var existingCustomer = context.Customers.FirstOrDefault(c =>
                 c.Name.ToLower().Equals(customerName.ToLower()) &&
                 c.Telephone == customerPhone);
@@ -121,6 +123,7 @@ namespace DumplingsEFCore
             }
             else
             {
+                /* Add new customer if no is found */
                 customer = new Customer
                 {
                     Name = customerName,
@@ -133,8 +136,9 @@ namespace DumplingsEFCore
 
             Console.WriteLine("Här är menyn");
             var menu = new MenuManager(context);
-            menu.PrintMenuItems();
+            menu.PrintMenuItems(); // Prints out the menu
 
+            /* Add new order */
             var newOrder = new Order
             {
 
@@ -144,8 +148,7 @@ namespace DumplingsEFCore
 
             };
 
-            // add items to the order
-
+            /* add items to the order */
             while (true)
             {
 
@@ -176,6 +179,8 @@ namespace DumplingsEFCore
 
                 newOrder.Items.Add(newOrderItem);
             }
+
+            /* Calculate total price */
             newOrder.TotalPrice = newOrder.Items.Sum(item => item.MenuItem.Price * item.Quantity);
 
             context.Orders.Add(newOrder);
@@ -194,15 +199,18 @@ namespace DumplingsEFCore
                 .Include(c => c.Orders)
                 .ThenInclude(o => o.Items)
                 .ThenInclude(oi => oi.MenuItem)
-                .FirstOrDefault(c => c.Name.Equals(customerName.ToLower()));
+                .FirstOrDefault(c => c.Name.Equals(customerName.ToLower())); // takes the first match
+
             if (customer == null)
             {
                 Console.WriteLine("Kunden hittades inte.");
                 return;
             }
+
             var latestOrder = customer.Orders
                 .OrderByDescending(o => o.OrderDate)
                 .FirstOrDefault();
+
             if (latestOrder == null)
             {
                 Console.WriteLine("Inga orders hittades.");
@@ -210,10 +218,11 @@ namespace DumplingsEFCore
             }
             Console.WriteLine($"Uppdaterar order {latestOrder.Id} från {latestOrder.OrderDate} av {customer.Name}");
 
-            DisplayOrderItems(latestOrder);
+            DisplayOrderItems(latestOrder); // Display current order details
 
-            UpdateSwitch(latestOrder);
+            UpdateSwitch(latestOrder);  // Call method to handle updates to the order
 
+            // Update total price
             latestOrder.TotalPrice = latestOrder.Items.Sum(i => i.MenuItem.Price * i.Quantity);
             context.SaveChanges();
             Console.WriteLine($"\nOrder {latestOrder.Id} uppdaterades. Ny totalpris: {latestOrder.TotalPrice:C}");
@@ -228,6 +237,7 @@ namespace DumplingsEFCore
             }
         }
 
+        /* Handles the updating of an order (add/update/remove items) */
         private void UpdateSwitch(Order latestOrder)
         {
             bool updating = true;

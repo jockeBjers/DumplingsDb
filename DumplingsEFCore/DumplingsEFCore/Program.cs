@@ -63,16 +63,17 @@ namespace DumplingsEFCore
             }
         }
 
+        /* Some methods to till the database*/
 
         public static void AddDrinks()
         {
             var newDrinks = new List<MenuItem> {
-                new MenuItem{ Name = "Coca Cola", Description = "Soda", Category = "Drink", Price = 4 },
-                new MenuItem{ Name = "Fanta", Description = "Soda", Category = "Drink", Price = 4 },
-                new MenuItem{ Name = "Coca Cola Zero", Description = "Soda", Category = "Drink", Price = 4 },
-                new MenuItem{ Name = "Loka naturell", Description = "Soda", Category = "Drink", Price = 4 },
-                new MenuItem{ Name = "Loka Citron", Description = "Soda", Category = "Drink", Price = 4 },
-                new MenuItem{ Name = "Trocadero", Description = "Soda", Category = "Drink", Price = 4 }
+                new MenuItem{ Name = "Coca Cola", Description = "Soda", Category = "Drink", Price = 19 },
+                new MenuItem{ Name = "Fanta", Description = "Soda", Category = "Drink", Price = 19 },
+                new MenuItem{ Name = "Coca Cola Zero", Description = "Soda", Category = "Drink", Price =19 },
+                new MenuItem{ Name = "Loka naturell", Description = "Soda", Category = "Drink", Price = 19 },
+                new MenuItem{ Name = "Loka Citron", Description = "Soda", Category = "Drink", Price = 19 },
+                new MenuItem{ Name = "Trocadero", Description = "Soda", Category = "Drink", Price = 10 }
                 };
             context.MenuItems.AddRange(newDrinks);
             context.SaveChanges();
@@ -80,11 +81,11 @@ namespace DumplingsEFCore
         void AddFood()
         {
             var newFoodItems = new List<MenuItem> {
-                new MenuItem{ Name = "Pork dumplings", Description = "Klassisk dumpling med fläsk", Category = "Food", Price = 4 },
-                new MenuItem{ Name = "Chicken dumplings", Description = "Kyckling och thaibasilika", Category = "Food", Price = 4 },
-                new MenuItem{ Name = "Shrimp dumplings", Description = "Dumplings med räka", Category = "Food", Price = 4 },
-                new MenuItem{ Name = "mushroom dumplings", Description = "Vegetarianskt", Category = "Food", Price = 4 },
-                new MenuItem{ Name = "spicy pork dumplings", Description = "För er som tycker om lite mer hetta", Category = "Food", Price = 4 }
+                new MenuItem{ Name = "Pork dumplings", Description = "Klassisk dumpling med fläsk", Category = "Food", Price = 45 },
+                new MenuItem{ Name = "Chicken dumplings", Description = "Kyckling och thaibasilika", Category = "Food", Price = 45 },
+                new MenuItem{ Name = "Shrimp dumplings", Description = "Dumplings med räka", Category = "Food", Price = 55 },
+                new MenuItem{ Name = "mushroom dumplings", Description = "Vegetarianskt", Category = "Food", Price = 45 },
+                new MenuItem{ Name = "spicy pork dumplings", Description = "För er som tycker om lite mer hetta", Category = "Food", Price = 45 }
                 };
             context.MenuItems.AddRange(newFoodItems);
             context.SaveChanges();
@@ -100,15 +101,6 @@ namespace DumplingsEFCore
                 };
             context.Staff.AddRange(newStaff);
             context.SaveChanges();
-        }
-
-        void GetDrinks()
-        {
-            var drinks = context.MenuItems.Where(d => d.Category == "Drink");
-            foreach (var drink in drinks)
-            {
-                Console.WriteLine($"{drink.Name}, {drink.Description}, {drink.Category}, {drink.Price} kr");
-            }
         }
 
         public static void CloseProgram() // the program closes the environment.

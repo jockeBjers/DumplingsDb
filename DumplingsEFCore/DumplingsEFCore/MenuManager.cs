@@ -62,7 +62,7 @@ namespace DumplingsEFCore
 
         public void PrintMenuItems()
         {
-
+            /* Printing out menu items, filtering by category food/drinks */
             var foodItems = context.MenuItems
                 .Where(d => d.Category == "Food")
                 .OrderBy(d => d.Name)
@@ -104,6 +104,7 @@ namespace DumplingsEFCore
 
             decimal price = InputHelper.GetUserInput<decimal>("Skriv in priset: ");
 
+            /* Add a new product */
             var newItem = new MenuItem
             {
                 Name = name,

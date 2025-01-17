@@ -122,20 +122,5 @@ namespace DumplingsEFCore
             context.SaveChanges();
             Console.WriteLine($"{person.Name} (ID: {person.Id}) har tagits bort.");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
