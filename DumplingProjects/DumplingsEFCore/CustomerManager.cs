@@ -65,6 +65,7 @@ namespace DumplingsEFCore
 
         public void PrintCustomer()
         {
+            /* sorts and prints out the customers and their orders */
             var customers = context.Customers
                 .Include(c => c.Orders)
                 .ThenInclude(o => o.Items)
@@ -84,6 +85,7 @@ namespace DumplingsEFCore
 
         public void AddCustomer()
         {
+            // Adds a new customer. related orders can be created in the OrderManager 
             string name = InputHelper.GetUserInput<string>("Skriv i namn:");
             string telephone = InputHelper.GetUserInput<string>("Skriv i telefonnummer: ");
 
