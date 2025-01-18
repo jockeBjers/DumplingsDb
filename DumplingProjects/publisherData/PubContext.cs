@@ -37,7 +37,8 @@ namespace publisherData
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
         public int CustomerId { get; set; }  
-        public Customer? Customer { get; set; } 
+        public Customer? Customer { get; set; }
+        public bool IsCompleted { get; set; } = false;
 
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
     }
