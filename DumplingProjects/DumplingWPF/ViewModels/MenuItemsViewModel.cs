@@ -54,7 +54,7 @@ namespace DumplingWPF
             // Validate inputs
             if (string.IsNullOrWhiteSpace(name) || price <= 0)
             {
-                throw new ArgumentException("Name cannot be empty, and price must be greater than zero.");
+                throw new ArgumentException("Namn måste vara ifyllt och pris större än noll.");
             }
 
             // Create a new food item
@@ -78,7 +78,7 @@ namespace DumplingWPF
             // Validate inputs
             if (string.IsNullOrWhiteSpace(name) || price <= 0)
             {
-                throw new ArgumentException("Name cannot be empty, and price must be greater than zero.");
+                throw new ArgumentException("Namn måste vara ifyllt och pris större än noll.");
             }
 
             // Create a new food item
@@ -106,7 +106,7 @@ namespace DumplingWPF
         {
             if (string.IsNullOrWhiteSpace(SearchName))
             {
-                throw new ArgumentException("Search term cannot be empty.");
+                throw new ArgumentException("Sökfältet kan inte vara tomt.");
             }
 
             var item = context.MenuItems.FirstOrDefault(d =>
@@ -147,7 +147,7 @@ namespace DumplingWPF
             }
             else
             {
-                throw new InvalidOperationException("Food item not found for update.");
+                throw new InvalidOperationException("Föremål kan inte hittas.");
             }
 
         }

@@ -39,8 +39,8 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Content="Lägg till" Click="AddFoodItem_Click" FontSize="16" Margin="0,5,5,0" Padding="5" />
-                            <Button Grid.Column="1" Content="Ångra" Click="CancelFoodButton_Click" FontSize="16" Margin="5,5,0,0" Padding="5" />
+                            <Button Grid.Column="0" Content="Lägg till" Click="AddFoodItem_Click"  Margin="0,5,5,0"/>
+                            <Button Grid.Column="1" Content="Ångra" Click="CancelFoodButton_Click" Margin="5,5,0,0"/>
                         </Grid>
 
 

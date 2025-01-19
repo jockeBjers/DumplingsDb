@@ -58,7 +58,7 @@
             </ListBox>
 
             <!--Refresh customer list-->
-            <Button Grid.Row="2" Content="Uppdatera orderlista" Click="RefreshOrders_Click" Margin="0,10" HorizontalAlignment="Center" Width="150" />
+            <Button Grid.Row="2" Content="Uppdatera orderlista" Click="RefreshOrders_Click" Margin="0,10" HorizontalAlignment="Center" Width="150"/>
 
         </Grid>
     </Grid>
