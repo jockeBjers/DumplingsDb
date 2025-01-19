@@ -23,7 +23,7 @@ namespace DumplingWPF
         {
             if (name.Any(char.IsDigit))
             {
-                MessageBox.Show("Name cannot contain numbers. Please enter a valid name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Ange ett korrekt namn", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -33,7 +33,7 @@ namespace DumplingWPF
                 {
                     ViewModel.AddFoodItem(name, description, price);
                     clearFields?.Invoke();
-                    MessageBox.Show($"Item {name} added with price: {price}");
+                    MessageBox.Show($"Föremål {name} tillagd med pris: {price}");
                 }
                 catch (Exception ex)
                 {
@@ -42,7 +42,7 @@ namespace DumplingWPF
             }
             else
             {
-                MessageBox.Show("Invalid price. Please enter a valid decimal value.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Ogiltigt pris. Var god och ange korrekt värde", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -60,7 +60,7 @@ namespace DumplingWPF
             {
                 if (!ViewModel.SearchFoodItem())
                 {
-                    MessageBox.Show("Item not found.");
+                    MessageBox.Show("Kunde inte hitta föremål.");
                 }
             }
             catch (Exception ex)
@@ -74,8 +74,8 @@ namespace DumplingWPF
             try
             {
                 var result = MessageBox.Show(
-                    "Are you sure you want to update this item?",
-                    "Confirm Update",
+                    "Är du säker på att du vill uppdatera detta föremål?",
+                    "Bekräfta uppdatering",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
 
@@ -96,8 +96,8 @@ namespace DumplingWPF
             try
             {
                 var result = MessageBox.Show(
-                    "Are you sure you want to remove this item?",
-                    "Confirm Removal",
+                    "Är du säker på att du vill ta bort detta föremål?",
+                    "Bekräfta borttagelse",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Warning);
 
@@ -105,7 +105,7 @@ namespace DumplingWPF
                 {
                     if (!ViewModel.RemoveFoodItem())
                     {
-                        MessageBox.Show("Item not found or could not be removed.");
+                        MessageBox.Show("Föremål kunde inte hittas eller tas bort.");
                     }
                 }
             }

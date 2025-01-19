@@ -42,12 +42,12 @@
 
                 <!-- Minimize Button -->
                 <Button Content="_" HorizontalAlignment="Right" Margin="0,13,5,0" VerticalAlignment="Top"
-                        Width="30" Height="30" Background="DarkRed" BorderBrush="Black"
+                        Width="30" Height="30" Background="DarkRed" Foreground="Gold" BorderBrush="Black"
                         Grid.Column="1" Click="MinimizeButton_Click"/>
 
                 <!-- Close Button -->
                 <Button Content="X" HorizontalAlignment="Right" Margin="0,13,20,0" VerticalAlignment="Top"
-                        Width="30" Height="30" Background="DarkRed" BorderBrush="Black"
+                        Width="30" Height="30" Background="DarkRed" Foreground="Gold" BorderBrush="Black"
                         Grid.Column="2" Click="CloseButton_Click"/>
             </Grid>
 
@@ -63,21 +63,18 @@
                 </TabItem>
 
                 <!-- TAB FOR DISHES -->
-                <TabItem Header="Hantera maträtter" Height="20" VerticalAlignment="Top">
+                <TabItem Header="Hantera maträtter">
                     <local:FoodView />
                 </TabItem>
 
                 <!-- TAB FOR DRINKS-->
-                <TabItem Header="Hantera Drycker" Height="20" VerticalAlignment="Top">
+                <TabItem Header="Hantera Drycker">
                     <local:DrinkView />
                 </TabItem>
 
 
                 <TabItem Header="Kundhistorik">
                     <local:CustomerView />
-                </TabItem>
-                <TabItem Header="Personal">
-
                 </TabItem>
 
             </TabControl>
