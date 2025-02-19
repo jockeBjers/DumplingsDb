@@ -34,6 +34,7 @@ public class Program
 
         // get all menu items
         MenuEndPoints.Map(app);
+        StaffEndPoints.Map(app);
 
         app.Run();
     }

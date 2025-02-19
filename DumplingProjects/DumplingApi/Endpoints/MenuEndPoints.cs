@@ -30,7 +30,7 @@ namespace DumplingApi.Endpoints
             // GET single MenuItem by ID
             app.MapGet("/api/menuitems/{id}", async (int id, PubContext dbContext) =>
             {
-                var menuItem = await dbContext.MenuItems.FirstOrDefaultAsync(x => x.Id == id);
+                var menuItem = await dbContext.MenuItems.FindAsync(id);
                 return menuItem is not null ? Results.Ok(menuItem) : Results.NotFound();
             })
             .WithName("GetMenuItem")
@@ -47,7 +47,7 @@ namespace DumplingApi.Endpoints
             // Update MenuItem
             app.MapPut("/api/menuitems/update/{id}", async (int id, MenuItem menuItem, PubContext dbContext) =>
             {
-                var existingMenuItem = await dbContext.MenuItems.FirstOrDefaultAsync(x => x.Id == id);
+                var existingMenuItem = await dbContext.MenuItems.FindAsync();
                 if (existingMenuItem is null) return Results.NotFound();
 
                 existingMenuItem.Name = menuItem.Name;
@@ -62,7 +62,7 @@ namespace DumplingApi.Endpoints
             // DELETE MenuItem
             app.MapDelete("/api/menuitems/delete/{id}", async (int id, PubContext dbContext) =>
             {
-                var menuItem = await dbContext.MenuItems.FirstOrDefaultAsync(x => x.Id == id);
+                var menuItem = await dbContext.MenuItems.FindAsync(id);
                 if (menuItem is null) return Results.NotFound();
 
                 dbContext.MenuItems.Remove(menuItem);
