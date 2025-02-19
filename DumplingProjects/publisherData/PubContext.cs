@@ -4,22 +4,22 @@ namespace publisherData
 {
     public class PubContext : DbContext
     {
-
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Staff> Staff { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public PubContext(DbContextOptions<PubContext> options) : base(options) { }
 
         /// <summary>
         /// Configures the database connection, bra för att lära sigg men ska inte hardkodas i vanliga projekt, använd config fil
         /// </summary>
         /// <param name="optionsBuilder"></param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+   /*     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
                 @"Server=DESKTOP-V7OGRKD;Database=DumplingDB;Trusted_Connection=True;TrustServerCertificate=True;");
-        }
+        }*/
     }
 
     public class MenuItem
