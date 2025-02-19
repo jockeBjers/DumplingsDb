@@ -16,8 +16,14 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        });
         builder.Services.AddDbContext<PubContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
         var app = builder.Build();
 
@@ -35,6 +41,7 @@ public class Program
         // get all menu items
         MenuEndPoints.Map(app);
         StaffEndPoints.Map(app);
+        CustomerEndPoints.Map(app);
 
         app.Run();
     }
