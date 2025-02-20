@@ -17,12 +17,36 @@ public class CustomerEndPoints
         });
 
         // Get single customer by ID
-        app.MapGet("/api/customers/{id}", async (int id, PubContext dbContext) =>
+        app.MapGet("/api/customers/{id}/orders", async (int id, PubContext dbContext) =>
         {
-            var customer = await dbContext.Customers.FindAsync(id);
+            var customer = await dbContext.Customers
+             .Where(c => c.Id == id)
+             .Include(c => c.Orders)
+             .ThenInclude(o => o.Items)
+             .ThenInclude(i => i.MenuItem)
+             .FirstOrDefaultAsync();
+
             if (customer == null) return Results.NotFound();
 
-            return Results.Ok(customer);
+            return Results.Ok(new
+            {
+                customer.Id,
+                customer.Name,
+                customer.Telephone,
+                Orders = customer.Orders.Select(o => new
+                {
+                    o.Id,
+                    o.OrderDate,
+                    o.IsCompleted,
+                    o.TotalPrice,
+                    Items = o.Items.Select(i => new
+                    {
+                        MenuItemName = i.MenuItem.Name,
+                        i.Quantity
+                    })
+                })
+            });
+
         });
 
         // Post new Customer
