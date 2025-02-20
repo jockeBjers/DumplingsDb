@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "publisherData", "publisherD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumplingWPF", "DumplingWPF\DumplingWPF.csproj", "{E415D42B-BDDC-4CD1-9BBD-47E414AE7387}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumplingApi", "DumplingApi\DumplingApi.csproj", "{E26A91CA-3B5B-48D6-85CD-123F47D5BF04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E415D42B-BDDC-4CD1-9BBD-47E414AE7387}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E415D42B-BDDC-4CD1-9BBD-47E414AE7387}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E415D42B-BDDC-4CD1-9BBD-47E414AE7387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E26A91CA-3B5B-48D6-85CD-123F47D5BF04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E26A91CA-3B5B-48D6-85CD-123F47D5BF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E26A91CA-3B5B-48D6-85CD-123F47D5BF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E26A91CA-3B5B-48D6-85CD-123F47D5BF04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
