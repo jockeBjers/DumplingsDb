@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Menu</title>
+    <style>
+        h1 {
+            color: red;
+        }
+
+        h2 {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+
+
+    <h2>Staff</h2>
+    <ol id="staffList"></ol>
+
+    <script>
+
+
+
+        fetch('https://localhost:7172/api/staff')
+            .then(response => response.json())
+            .then(data => {
+                var staffList = document.getElementById("staffList");
+
+                data.forEach(staffMember => {
+                    var li = document.createElement("li");
+                    li.textContent = staffMember.name + " - " + staffMember.role;
+                    staffList.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching staff:', error);
+            });
+
+
+
+    </script>
+
+</body>
+</html>
