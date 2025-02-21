@@ -16,16 +16,22 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddControllers().AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-        });
         builder.Services.AddDbContext<PubContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowSpecificOrigin", policy =>
+            {
+                policy.WithOrigins("http://localhost:5500", "http://127.0.0.1:5500") 
+                      .AllowAnyMethod()
+                      .AllowAnyHeader();
+            });
+        });
 
         var app = builder.Build();
+
+        app.UseCors("AllowSpecificOrigin");
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -33,6 +39,7 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        app.UseStaticFiles();
 
         app.UseHttpsRedirection();
 
@@ -42,6 +49,7 @@ public class Program
         MenuEndPoints.Map(app);
         StaffEndPoints.Map(app);
         CustomerEndPoints.Map(app);
+        OrderEndPoints.Map(app);
 
         app.Run();
     }
