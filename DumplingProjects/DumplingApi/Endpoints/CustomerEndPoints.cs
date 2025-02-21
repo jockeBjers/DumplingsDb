@@ -12,8 +12,13 @@ public class CustomerEndPoints
         // Get all customers
         app.MapGet("/api/customers", async (PubContext dbContext) =>
         {
-            return await dbContext.Customers.ToListAsync();
-
+            var customers = await dbContext.Customers.Select(c => new
+            {
+                c.Id,
+                c.Name,
+                c.Telephone,
+            }).ToListAsync();
+            return Results.Ok(customers);
         });
 
         // Get single customer by ID
@@ -46,7 +51,6 @@ public class CustomerEndPoints
                     })
                 })
             });
-
         });
 
         // Post new Customer
