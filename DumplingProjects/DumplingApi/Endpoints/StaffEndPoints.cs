@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DumplingApi.Services;
+using Microsoft.EntityFrameworkCore;
 using publisherData;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace DumplingApi.Endpoints;
@@ -8,52 +10,41 @@ public class StaffEndPoints
 {
     public static void Map(WebApplication app)
     {
-
         // Get All Staff members
-        app.MapGet("api/staff", async (PubContext dbContext) =>
+        app.MapGet("api/staff", async (IStaffService service) =>
         {
-            return await dbContext.Staff.ToListAsync();
+            return await service.GetAllStaffAsync();
         });
 
         // get single staff by ID
-        app.MapGet("api/staff/{id}", async (int id, PubContext dbContext) =>
+        app.MapGet("api/staff/{id}", async (int id, IStaffService service) =>
         {
-            var staffMember = await dbContext.Staff.FindAsync(id);
+            var staffMember = await service.GetStaffByIdAsync(id);
             if (staffMember == null) return Results.NotFound();
-
             return Results.Ok(staffMember);
         });
 
         // Post create new staff member
-        app.MapPost("api/staff", async (Staff newStaff, PubContext dbContext) =>
+        app.MapPost("api/staff", async (Staff newStaff, IStaffService service) =>
         {
-            dbContext.Staff.Add(newStaff);
-            await dbContext.SaveChangesAsync();
-            return Results.Created($"api/staff/{newStaff.Id}", newStaff);
+            var createdStaff = await service.CreateStaffAsync(newStaff);
+
+            return Results.Created($"api/staff/{createdStaff.Id}", createdStaff);
         });
 
         // Update staff member
-        app.MapPut("/api/staff/update/{id}", async (int id, Staff staffMember, PubContext dbContext) =>
+        app.MapPut("/api/staff/update/{id}", async (int id, Staff staffMember, IStaffService service) =>
         {
-            var newStaffMember = await dbContext.Staff.FindAsync(id);
+            var newStaffMember = await service.UpdateStaffAsync(id, staffMember);
             if (newStaffMember == null) return Results.NotFound();
-
-            newStaffMember.Name = staffMember.Name;
-            newStaffMember.Telephone = staffMember.Telephone;
-            newStaffMember.Role = staffMember.Role;
-
-            await dbContext.SaveChangesAsync();
             return Results.Ok(newStaffMember);
         });
 
         // Update staff member
-        app.MapDelete("/api/staff/delete/{id}", async (int id, PubContext dbContext) =>
+        app.MapDelete("/api/staff/delete/{id}", async (int id, IStaffService service) =>
         {
-            var staffMember = await dbContext.Staff.FindAsync(id);
-            if (staffMember == null) return Results.NotFound();
-
-            dbContext.Staff.Remove(staffMember);
-            await dbContext.SaveChangesAsync();
+            var deleted = await service.DeleteStaffAsync(id);
+            if (!deleted) return Results.NotFound();
             return Results.Ok();
         });
     }
