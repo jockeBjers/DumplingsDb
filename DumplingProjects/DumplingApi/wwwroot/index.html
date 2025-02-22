@@ -14,13 +14,41 @@
     </style>
 </head>
 <body>
+    <h1>Menu</h1>
 
+    <h2>Food</h2>
+    <ol id="foodList"></ol>
+
+    <h2>Drinks</h2>
+    <ol id="drinkList"></ol>
 
     <h2>Staff</h2>
     <ol id="staffList"></ol>
 
     <script>
 
+        fetch('https://localhost:7172/api/menuitems')
+            .then(response => response.json())
+            .then(data => {
+
+                var foodList = document.getElementById("foodList");
+                var drinkList = document.getElementById("drinkList");
+
+
+                data.forEach(menuItem => {
+                    var li = document.createElement("li");
+                    li.textContent = menuItem.name + " - " + menuItem.price + " kr";
+
+                    if (menuItem.category === "Food") {
+                        foodList.appendChild(li);
+                    } else if (menuItem.category === "Drink") {
+                        drinkList.appendChild(li);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
 
 
         fetch('https://localhost:7172/api/staff')
