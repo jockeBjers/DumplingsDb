@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DumplingApi.Services;
+using Microsoft.EntityFrameworkCore;
 using publisherData;
 
 namespace DumplingApi.Endpoints
@@ -8,65 +9,46 @@ namespace DumplingApi.Endpoints
 
         public static void Map(WebApplication app)
         {
-            // GET all MenuItems
-            app.MapGet("/api/menuitems", async (PubContext dbContext) =>
+            // get all menu items
+            app.MapGet("/api/menuitems", async (IMenuItemService service) =>
             {
-                return await dbContext.MenuItems.ToListAsync();
-            })
-            .WithName("GetMenuItems")
-            .WithOpenApi();
+                return await service.GetAllMenuItemsAsync();
+            });
 
             // Get menu items by category
-            app.MapGet("/api/menuitems/category/{category}", async (string category, PubContext dbContext) =>
+            app.MapGet("/api/menuitems/category/{category}", async (string category, IMenuItemService service) =>
             {
-                var menuItems = await dbContext.MenuItems
-                    .Where(x => x.Category.ToLower() == category.ToLower())
-                    .ToListAsync();
-                return Results.Ok(menuItems);
-            })
-            .WithName("GetMenuItemsByCategory")
-            .WithOpenApi();
+                return await service.GetMenuItemsByCategoryAsync(category);
+            });
 
             // GET single MenuItem by ID
-            app.MapGet("/api/menuitems/{id}", async (int id, PubContext dbContext) =>
+            app.MapGet("/api/menuitems/{id}", async (int id, IMenuItemService service) =>
             {
-                var menuItem = await dbContext.MenuItems.FindAsync(id);
-                return menuItem is not null ? Results.Ok(menuItem) : Results.NotFound();
-            })
-            .WithName("GetMenuItem")
-            .WithOpenApi();
+                var menuItem = await service.GetMenuItemByIdAsync(id);
+                if (menuItem is null) return Results.NotFound();
+                return Results.Ok(menuItem);
+            });
 
             // POST new MenuItem
-            app.MapPost("/api/menuitems", async (MenuItem menuItem, PubContext dbContext) =>
+            app.MapPost("/api/menuitems", async (MenuItem menuItem, IMenuItemService service) =>
             {
-                dbContext.MenuItems.Add(menuItem);
-                await dbContext.SaveChangesAsync();
-                return Results.Created($"/api/menuitems/{menuItem.Id}", menuItem);
+                var newMenuItem = await service.CreateMenuItemAsync(menuItem);
+                return Results.Created($"/api/menuitems/{newMenuItem.Id}", newMenuItem);
             });
 
             // Update MenuItem
-            app.MapPut("/api/menuitems/update/{id}", async (int id, MenuItem menuItem, PubContext dbContext) =>
+            app.MapPut("/api/menuitems/update/{id}", async (int id, MenuItem menuItem, IMenuItemService service) =>
             {
-                var existingMenuItem = await dbContext.MenuItems.FindAsync();
+                var existingMenuItem = await service.UpdateMenuItemAsync(id, menuItem);
                 if (existingMenuItem is null) return Results.NotFound();
-
-                existingMenuItem.Name = menuItem.Name;
-                existingMenuItem.Description = menuItem.Description;
-                existingMenuItem.Price = menuItem.Price;
-                existingMenuItem.Category = menuItem.Category;
-
-                await dbContext.SaveChangesAsync();
                 return Results.Ok(existingMenuItem);
             });
 
             // DELETE MenuItem
-            app.MapDelete("/api/menuitems/delete/{id}", async (int id, PubContext dbContext) =>
+            app.MapDelete("/api/menuitems/delete/{id}", async (int id, IMenuItemService service) =>
             {
-                var menuItem = await dbContext.MenuItems.FindAsync(id);
-                if (menuItem is null) return Results.NotFound();
-
-                dbContext.MenuItems.Remove(menuItem);
-                await dbContext.SaveChangesAsync();
+                var menuItem = await service.DeleteMenuItemAsync(id);
+                if (!menuItem) return Results.NotFound();
                 return Results.Ok();
             });
 
