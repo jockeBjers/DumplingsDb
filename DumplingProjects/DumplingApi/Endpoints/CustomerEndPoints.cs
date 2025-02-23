@@ -28,14 +28,14 @@ public class CustomerEndPoints
         });
 
         // Post new Customer
-        app.MapPost("/api/customers", async (Customer newCustomer, ICustomerService service) =>
+        app.MapPost("/api/customers", async (CustomerDto newCustomer, ICustomerService service) =>
         {
             var customer = await service.CreateCustomerAsync(newCustomer);
             return Results.Created($"/api/customers/{customer.Id}", customer);
         });
 
         //update customer
-        app.MapPut("/api/customers/{id}", async (int id, Customer customer, ICustomerService service) =>
+        app.MapPut("/api/customers/{id}", async (int id, CustomerDto customer, ICustomerService service) =>
         {
             var existingCustomer = await service.UpdateCustomerAsync(id, customer);
             if (existingCustomer == null) return Results.NotFound();

@@ -64,8 +64,12 @@ public class OrderEndPoints
             });
         });
 
-
-
-
+        // Post new order
+        app.MapPost("/api/orders", async (Order newOrder, PubContext dbContext) =>
+        {
+            dbContext.Orders.Add(newOrder);
+            await dbContext.SaveChangesAsync();
+            return Results.Created($"/api/orders/{newOrder.Id}", newOrder);
+        });
     }
 }

@@ -7,8 +7,8 @@ public interface ICustomerService
 {
     Task<List<CustomerDto>> GetAllCustomersAsync();
     Task<CustomerWithOrdersDto?> GetCustomerByIdAsync(int id);
-    Task<Customer> CreateCustomerAsync(Customer newCustomer);
-    Task<Customer?> UpdateCustomerAsync(int id, Customer updatedCustomer);
+    Task<CustomerDto> CreateCustomerAsync(CustomerDto newCustomer);
+    Task<CustomerDto?> UpdateCustomerAsync(int id, CustomerDto updatedCustomer);
     Task<bool> DeleteCustomerAsync(int id);
 }
 
@@ -94,22 +94,42 @@ public class CustomerService : ICustomerService
     }
 
     //create new customer
-    public async Task<Customer> CreateCustomerAsync(Customer newCustomer)
+    public async Task<CustomerDto> CreateCustomerAsync(CustomerDto newCustomerDto)
     {
-        dbContext.Customers.Add(newCustomer);
+        var customer = new Customer
+        {
+            Name = newCustomerDto.Name,
+            Telephone = newCustomerDto.Telephone
+        };
+
+        dbContext.Customers.Add(customer);
         await dbContext.SaveChangesAsync();
-        return newCustomer;
+
+        return new CustomerDto
+        {
+            Id = customer.Id,
+            Name = customer.Name,
+            Telephone = customer.Telephone
+        };
     }
 
-    //update customer
-    public async Task<Customer?> UpdateCustomerAsync(int id, Customer updatedCustomer)
+    // Update existing customer
+    public async Task<CustomerDto?> UpdateCustomerAsync(int id, CustomerDto updatedCustomerDto)
     {
         var customer = await dbContext.Customers.FindAsync(id);
         if (customer == null) return null;
-        customer.Name = updatedCustomer.Name;
-        customer.Telephone = updatedCustomer.Telephone;
+
+        customer.Name = updatedCustomerDto.Name;
+        customer.Telephone = updatedCustomerDto.Telephone;
+
         await dbContext.SaveChangesAsync();
-        return customer;
+
+        return new CustomerDto
+        {
+            Id = customer.Id,
+            Name = customer.Name,
+            Telephone = customer.Telephone
+        };
     }
 
     //delete customer
