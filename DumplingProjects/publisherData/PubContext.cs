@@ -15,7 +15,7 @@ namespace publisherData
         /// Configures the database connection, bra för att lära sigg men ska inte hardkodas i vanliga projekt, använd config fil
         /// </summary>
         /// <param name="optionsBuilder"></param>
-   /*     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
                 @"Server=DESKTOP-V7OGRKD;Database=DumplingDB;Trusted_Connection=True;TrustServerCertificate=True;");
@@ -37,6 +37,7 @@ namespace publisherData
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
         public int CustomerId { get; set; }  
+
         public Customer? Customer { get; set; }
         public bool IsCompleted { get; set; } = false;
 

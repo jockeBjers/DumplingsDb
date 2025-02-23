@@ -1,4 +1,5 @@
 using DumplingApi.Endpoints;
+using DumplingApi.Services;
 using Microsoft.EntityFrameworkCore;
 using publisherData;
 namespace DumplingApi;
@@ -17,6 +18,8 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddDbContext<PubContext>(options =>
+
+
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         builder.Services.AddCors(options =>
@@ -29,6 +32,10 @@ public class Program
             });
         });
 
+        builder.Services.AddScoped<IStaffService, StaffService>();
+        builder.Services.AddScoped<IMenuItemService, MenuItemService>();
+        builder.Services.AddScoped<ICustomerService, CustomerService>();
+
         var app = builder.Build();
 
         app.UseCors("AllowSpecificOrigin");
@@ -39,6 +46,7 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
         app.UseStaticFiles();
 
         app.UseHttpsRedirection();
