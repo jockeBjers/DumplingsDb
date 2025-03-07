@@ -19,25 +19,26 @@ public class CustomerDto
     public required string Name { get; set; }
     public required string Telephone { get; set; }
 }
-public class OrderItemDto
+public class CustomerOrderItemDto
 {
     public string? MenuItemName { get; set; }
     public int Quantity { get; set; }
 }
-public class OrderDto
+public class CustomerOrderDto
 {
     public int Id { get; set; }
     public DateTime OrderDate { get; set; }
     public bool IsCompleted { get; set; }
     public decimal TotalPrice { get; set; }
-    public List<OrderItemDto>? Items { get; set; }
+    public List<CustomerOrderItemDto>? Items { get; set; }
 }
+
 public class CustomerWithOrdersDto
 {
     public int Id { get; set; }
     public string? Name { get; set; }
     public string? Telephone { get; set; }
-    public List<OrderDto>? Orders { get; set; }
+    public List<CustomerOrderDto>? Orders { get; set; }
 }
 
 public class CustomerService : ICustomerService
@@ -78,13 +79,13 @@ public class CustomerService : ICustomerService
             Id = customer.Id,
             Name = customer.Name,
             Telephone = customer.Telephone,
-            Orders = customer.Orders.Select(o => new OrderDto
+            Orders = customer.Orders.Select(o => new CustomerOrderDto
             {
                 Id = o.Id,
                 OrderDate = o.OrderDate,
                 IsCompleted = o.IsCompleted,
                 TotalPrice = o.TotalPrice,
-                Items = o.Items.Select(i => new OrderItemDto
+                Items = o.Items.Select(i => new CustomerOrderItemDto
                 {
                     MenuItemName = i.MenuItem.Name,
                     Quantity = i.Quantity

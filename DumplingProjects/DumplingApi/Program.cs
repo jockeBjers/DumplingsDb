@@ -35,6 +35,7 @@ public class Program
         builder.Services.AddScoped<IStaffService, StaffService>();
         builder.Services.AddScoped<IMenuItemService, MenuItemService>();
         builder.Services.AddScoped<ICustomerService, CustomerService>();
+        builder.Services.AddScoped<IOrderService, OrderService>();
 
         var app = builder.Build();
 

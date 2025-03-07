@@ -1,4 +1,6 @@
 ﻿using DumplingApi.Services;
+using DumplingApi.Validators;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using publisherData;
 
@@ -32,6 +34,18 @@ namespace DumplingApi.Endpoints
             // POST new MenuItem
             app.MapPost("/api/menuitems", async (MenuItem menuItem, IMenuItemService service) =>
             {
+                var validator = new MenuItemValidator();
+                var result = validator.Validate(menuItem);
+
+                if (!result.IsValid)
+                {
+                    return Results.BadRequest(result.Errors.Select(x => new
+                    {
+                        Field = x.PropertyName,
+                        Message = x.ErrorMessage
+                    }));
+                }
+
                 var newMenuItem = await service.CreateMenuItemAsync(menuItem);
                 return Results.Created($"/api/menuitems/{newMenuItem.Id}", newMenuItem);
             });
@@ -39,6 +53,18 @@ namespace DumplingApi.Endpoints
             // Update MenuItem
             app.MapPut("/api/menuitems/update/{id}", async (int id, MenuItem menuItem, IMenuItemService service) =>
             {
+                var validator = new MenuItemValidator();
+                var result = validator.Validate(menuItem);
+
+                if (!result.IsValid)
+                {
+                    return Results.BadRequest(result.Errors.Select(x => new
+                    {
+                        Field = x.PropertyName,
+                        Message = x.ErrorMessage
+                    }));
+                }
+
                 var existingMenuItem = await service.UpdateMenuItemAsync(id, menuItem);
                 if (existingMenuItem is null) return Results.NotFound();
                 return Results.Ok(existingMenuItem);
