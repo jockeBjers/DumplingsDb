@@ -2,30 +2,3 @@
 
 <PageTitle>Home</PageTitle>
 
-
-<div class="main-container">
-
-    <h3>Menu</h3>
-
-    <div class="menu-container">
-
-        <h4>Food</h4>
-        <ul>
-            @foreach (var item in FoodItems)
-            {
-                <li>@item.Name - @item.Price kr</li>
-            }
-        </ul>
-    </div>
-    <div class="menu-container">
-
-        <h4>Drinks</h4>
-        <ul>
-            @foreach (var item in DrinkItems)
-            {
-                <li>@item.Name - @item.Price kr</li> 
-            }
-        </ul>
-
-    </div>
-</div>

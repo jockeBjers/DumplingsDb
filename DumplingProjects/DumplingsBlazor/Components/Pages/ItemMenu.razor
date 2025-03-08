@@ -1,8 +1,45 @@
 @page "/menu"
 @inject HttpClient Http
 
-<h3>Menu</h3>
+<div class="main-container">
+    <div class="left-inner-container">
 
-<h4>Food</h4>
+        <h3>Menu</h3>
 
- 
+        <div class="menu-container">
+
+            <h4>Food</h4>
+            <ul>
+                @foreach (var item in FoodItems)
+                {
+                    <li>@item.Name - @item.Price kr</li>
+                }
+            </ul>
+        </div>
+        <div class="menu-container">
+
+            <h4>Drinks</h4>
+            <ul>
+                @foreach (var item in DrinkItems)
+                {
+                    <li>@item.Name - @item.Price kr</li>
+                }
+            </ul>
+
+        </div>
+    </div>
+    <div class="right-inner-container">
+         <h3>Cart</h3>
+         <div class="cart">
+
+            <h4>Your items</h4>
+            <ul>
+                @foreach (var item in cart)
+                {
+                    <li>@item.Name - @item.Price kr</li> 
+                }
+            </ul>
+
+        </div>
+    </div>
+</div>
