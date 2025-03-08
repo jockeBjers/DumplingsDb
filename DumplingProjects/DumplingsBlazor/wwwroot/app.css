@@ -1,0 +1,125 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+html,
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+    height: 100vh;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+/* header */
+
+.navbar {
+    background: rgb(0, 0, 0);
+    background: linear-gradient(313deg, rgba(0, 0, 0, 1) 0%, rgba(159, 13, 13, 1) 100%);
+    color: gold;
+    padding: 20px;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: gold;
+}
+
+.page-nav {
+    padding-right: 20px;
+}
+
+.nav-links {
+    font-size: 24px; 
+    text-decoration-line: none;
+    transition: transform .2s;
+}
+
+.nav-links:link,
+.nav-links:visited {
+    color: gold;
+}
+
+.nav-links:hover {
+    color: gold;
+    text-shadow: rgb(255, 235, 153) 1px 0 10px;
+}
+
+.nav-links:active {
+    color: gold;
+}
+
+.nav-links.active {
+    text-decoration-line: underline;
+    text-decoration-color: gold;
+}
+
+/* body */
+.content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-image:
+        linear-gradient(180deg, rgb(0, 0, 0) 0%, transparent 80%),
+        linear-gradient(0deg, rgb(0, 0, 0), transparent 70%),
+        url(img/dumplers.jpg);
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-direction: column;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(313deg, rgba(0, 0, 0, 1) 10%, rgba(159, 13, 13, 1) 100%);
+    padding: 50px;
+    border-radius: 10px;
+}
+
+.main-container h3 {
+    color: gold;
+    font-size: 40px;
+}
+
+.menu-container {
+    background-color: beige;
+    min-width: 360px;
+    line-height: 1.2;
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
