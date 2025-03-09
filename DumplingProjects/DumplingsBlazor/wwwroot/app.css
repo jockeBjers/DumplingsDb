@@ -12,7 +12,7 @@ body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-image:
         linear-gradient(180deg, rgb(0, 0, 0) 0%, transparent 80%),
-        linear-gradient(0deg, rgb(0, 0, 0), transparent 70%),
+        linear-gradient(0deg, rgb(0, 0, 0), transparent 90%),
         url(img/dumplers.jpg);
 
     background-position: center;
@@ -33,7 +33,8 @@ body {
 
 .navbar {
     background: rgb(0, 0, 0);
-    background: linear-gradient(313deg, rgba(0, 0, 0, 0) 50%, rgba(159, 13, 13, 1) 80%);
+    background: transparent;
+      /*   linear-gradient(313deg, rgba(0, 0, 0, 0) 50%, rgba(159, 13, 13, 1) 80%); */
     color: gold;
     padding: 20px;
 }
@@ -138,12 +139,10 @@ body {
 
 .sidebar {
     width: 250px;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    /*    color: white; */
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%);
     padding: 20px;
     text-align: center;
     display: flex;
-    /*   flex-direction: column; */
 }
 
 .nav-images {
@@ -153,57 +152,81 @@ body {
     align-items: center;
     gap: 15px;
     flex: 1;
-
+    margin-bottom: 40px;
+}
+.nav-images {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+    margin-bottom: 40px;
 }
 
 .nav-image {
+    position: relative;
     width: 100%;
     height: 25%;
     border-radius: 10px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    transition: transform 0.2s ease-in-out;
     display: flex;
     justify-content: start;
     align-items: end;
+    text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
-.nav-image h3{
-    font-size: 40px;
+
+.nav-image::before {
+    content: "";
+    position: absolute;
+    inset: 0; 
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%),
+                linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent 100%);
+    transition: opacity 0.4s ease-in-out; 
+}
+
+
+.nav-image h3 {
+    position: relative; 
+    font-size: 20px;
     background-color: rgba(0, 0, 0, 0.7);
     border-top-right-radius: 10px;
-    padding: 15px 15px 5px 5px;
+    border-bottom-left-radius: 10px;
+    padding: 20px 20px 10px 10px;
 }
 
-
-.nav-image {
-    font-size: 24px;
-    text-decoration-line: none;
-    transition: transform .2s;
+.nav-image.active::before {
+    opacity: 0; 
 }
+
+.nav-image.active {
+    color: gold;
+    text-decoration-line: underline;
+    text-decoration-color: gold;
+    box-shadow: 0 0 5px 1px rgba(255, 236, 131, 0.418);
+}
+
 
 .nav-image:link,
 .nav-image:visited {
     color: gold;
 }
 
+.nav-image:hover::before {
+    opacity: 0; 
+}
+
 .nav-image:hover {
     color: gold;
     text-shadow: rgb(255, 235, 153) 1px 0 10px;
-}
-
-.nav-image:active {
-    color: gold;
-}
-
-.nav-image.active {
-    text-decoration-line: underline;
-    text-decoration-color: gold;
-}
-
-.nav-image:hover {
+    box-shadow: 0 0 15px 1px rgba(255, 236, 131, 0.418);
     transform: scale(1.05);
 }
+
 
 .home {
     background-image: url(img/dumplers.jpg);
@@ -214,11 +237,11 @@ body {
 }
 
 .about {
-    background-image: url(img/restaurant.jpg);
+    background-image: url(img/chef.jpg);
 }
 
 .find-us {
-    background-image: url(img/chef.jpg);
+    background-image: url(img/restaurant.jpg);
 }
 
 li {
