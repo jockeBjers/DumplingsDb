@@ -103,14 +103,29 @@ public class OrderService : IOrderService
         };
     }
 
-
-    // Create a new order
+    // create order
     public async Task<OrderDto> CreateOrderAsync(OrderDto newOrderDto)
     {
-        var customer = await dbContext.Customers.FindAsync(newOrderDto.CustomerId);
-        if (customer == null)
+        var customer = newOrderDto.CustomerId > 0
+            ? await dbContext.Customers.FindAsync(newOrderDto.CustomerId)
+            : null;
+
+        if (customer == null && newOrderDto.CustomerId == 0 && newOrderDto.Customer != null)
         {
-            throw new InvalidOperationException("Customer with the provided ID does not exist.");
+            customer = await dbContext.Customers
+                .FirstOrDefaultAsync(c => c.Name == newOrderDto.Customer.Name && c.Telephone == newOrderDto.Customer.Telephone);
+
+
+            if (customer == null)
+            {
+                customer = new Customer
+                {
+                    Name = newOrderDto.Customer.Name,
+                    Telephone = newOrderDto.Customer.Telephone
+                };
+                dbContext.Customers.Add(customer);
+                await dbContext.SaveChangesAsync();
+            }
         }
 
         var order = new Order
@@ -118,16 +133,18 @@ public class OrderService : IOrderService
             OrderDate = newOrderDto.OrderDate,
             IsCompleted = newOrderDto.IsCompleted,
             TotalPrice = newOrderDto.TotalPrice,
-            CustomerId = customer.Id, 
-            Items = newOrderDto.Items!.Select(i => new OrderItem
+            CustomerId = customer.Id,
+            Items = newOrderDto.Items.Select(i => new OrderItem
             {
-                MenuItemId = dbContext.MenuItems.FirstOrDefault(m => m.Name == i.MenuItemName)!.Id,
+                MenuItemId = dbContext.MenuItems.FirstOrDefault(m => m.Name == i.MenuItemName)?.Id
+                             ?? throw new InvalidOperationException($"Menu item {i.MenuItemName} not found."),
                 Quantity = i.Quantity
             }).ToList()
         };
 
         dbContext.Orders.Add(order);
         await dbContext.SaveChangesAsync();
+
 
         return new OrderDto
         {
@@ -140,7 +157,7 @@ public class OrderService : IOrderService
                 MenuItemName = i.MenuItem.Name,
                 Quantity = i.Quantity
             }).ToList(),
-            CustomerId = order.CustomerId 
+            CustomerId = order.CustomerId
         };
     }
 
