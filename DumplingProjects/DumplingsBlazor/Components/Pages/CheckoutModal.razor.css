@@ -1,0 +1,65 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 50%;
+    height: 60%;
+    padding-inline: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.customer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.buttons {
+    display: flex;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 10px;
+    background: green;  
+    color: white;
+    border: none;
+    cursor: pointer;
+    flex: 2;
+}
+
+
+.checkout-btn:hover,
+.close-btn:hover {
+    transform: scale(1.05);
+}
+
+.close-btn {
+    width: 100%;
+    padding: 10px;
+    background: gray;
+    color: white;
+    border: none;
+    cursor: pointer;
+    flex: 1;
+}
+
+.close-btn:hover {
+    background: darkred;
+}

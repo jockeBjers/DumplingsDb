@@ -1,0 +1,32 @@
+﻿@inherits LayoutComponentBase
+
+<header class="navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">House of Dumplings</a>
+    </div>
+</header>
+
+<div class="content-wrapper">
+
+    <main class="content">
+        @Body
+    </main>
+
+    <aside class="sidebar">
+        <div class="nav-images">
+            <NavLink href="/" class="nav-image home" Match="NavLinkMatch.All">
+                <h3>HEM</h3>
+            </NavLink>
+            <NavLink href="/menu" class="nav-image menu">
+                <h3>MENY</h3>
+            </NavLink>
+            <NavLink href="/about" class="nav-image about">
+                <h3>OM OSS</h3>
+            </NavLink>
+            <NavLink href="/find-us" class="nav-image find-us">
+                <h3>HITTA HIT</h3>
+            </NavLink>
+        </div>
+    </aside>
+</div>
+ 
