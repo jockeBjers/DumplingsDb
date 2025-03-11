@@ -1,45 +1,87 @@
 @page "/menu"
+@using DumplingsBlazor.Models
 @inject HttpClient Http
+@inject DumplingsBlazor.Services.CartState CartState
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
 
 <div class="main-container">
     <div class="left-inner-container">
-
-        <h3>Menu</h3>
-
+        @* <h3>Meny</h3> *@
         <div class="menu-container">
-
-            <h4>Food</h4>
-            <ul>
-                @foreach (var item in FoodItems)
-                {
-                    <li>@item.Name - @item.Price kr</li>
-                }
-            </ul>
-        </div>
-        <div class="menu-container">
-
-            <h4>Drinks</h4>
-            <ul>
-                @foreach (var item in DrinkItems)
-                {
-                    <li>@item.Name - @item.Price kr</li>
-                }
-            </ul>
-
+            @MenuSection("Rätter", FoodItems)
+            @MenuSection("Drycker", DrinkItems)
         </div>
     </div>
+
     <div class="right-inner-container">
-         <h3>Cart</h3>
-         <div class="cart">
-
-            <h4>Your items</h4>
-            <ul>
-                @foreach (var item in cart)
-                {
-                    <li>@item.Name - @item.Price kr</li> 
-                }
-            </ul>
+      @*   <h3>Kundvagn</h3> *@
+        <div class="cart">
+            <h4>Dina varor</h4>
+            <div class="cart-items">
+                <ul>
+                    @foreach (var entry in CartState.Cart)
+                    {
+                        <li class="menu-card">
+                            <div class="cart-info">
+                                <p class="cart-name">@entry.MenuItem?.Name</p>
+                                <p class="cart-qty-price">@entry.Quantity x @entry.MenuItem?.Price kr</p>
+                                <p>@(entry.Quantity* entry.MenuItem?.Price) kr</p>
+                            </div>
+                            <div class="button-container">
+                                <button @onclick="() => CartState.RemoveFromCart(entry.MenuItem)"> <i class="fas fa-minus"></i> </button>
+                                <button @onclick="() => CartState.AddToCart(entry.MenuItem)">    <i class="fas fa-plus"></i> </button>
+                                <button @onclick="() => CartState.ClearEntry(entry.MenuItem)">  <i class="fas fa-trash"></i> </button>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
 
         </div>
+        <CheckoutModal IsOpen="@isCheckoutOpen" IsOpenChanged="@(value => isCheckoutOpen = value)" />
+
+
+
+        <button class="checkout-button" @onclick="() => isCheckoutOpen = true">
+            <span>Gå till kassan</span>
+            <span class="total-price"><strong>@CartState.TotalPrice kr</strong></span>
+        </button>
     </div>
+
 </div>
+@code {
+    RenderFragment MenuSection(string title, List<MenuItem> items) => @<div class="menu-section">
+    <h4>@title</h4>
+    <div class="menu-items-container">
+        @foreach (var item in items)
+                {
+                var cartEntry = CartState.Cart.FirstOrDefault(e => e.MenuItem.Id == item.Id);
+            var qty = cartEntry?.Quantity ?? 0;
+        <div class="menu-card">
+            <div class="menu-card-left">
+                <h5>@item.Name</h5>
+                <p>@item.Description</p>
+            </div>
+            <div class="menu-card-right">
+                <p><strong>@item.Price kr</strong></p>
+                @if (qty > 0)
+                                {
+                <p><strong>x @qty</strong></p>
+                                }
+                <div class="button-container">
+                    <button @onclick="() => CartState.RemoveFromCart(item)"> <i class="fas fa-minus"></i> </button>
+                    <button @onclick="() => CartState.AddToCart(item)">  <i class="fas fa-plus"></i> </button>
+                </div>
+            </div>
+        </div>
+                }
+    </div>
+</div>;
+}
+
+
+@code {
+    private bool isCheckoutOpen = false;
+
+}
