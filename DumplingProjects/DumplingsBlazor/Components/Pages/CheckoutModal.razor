@@ -1,0 +1,101 @@
+@inject HttpClient Http
+@inject DumplingsBlazor.Services.CartState CartState
+@using DumplingsBlazor.Models
+@code {
+
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public EventCallback<bool> IsOpenChanged { get; set; }
+}
+
+
+@if (IsOpen)
+
+{
+    <div class="modal-overlay" @onclick="CloseModal">
+        <div class="modal-content" @onclick:stopPropagation>
+            <h2>Checkout</h2>
+
+            @if (CartState.Cart.Any())
+            {
+                <div class="customer-info">
+                    <label for="customerName">Name:</label>
+                    <input type="text" id="customerName" @bind="customerName" required />
+
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="text" id="phoneNumber" @bind="phoneNumber" required />
+                </div>
+                <ul>
+                    @foreach (var entry in CartState.Cart)
+                    {
+                        <li>@entry.MenuItem!.Name - @entry.Quantity x @entry.MenuItem.Price kr</li>
+                    }
+                </ul>
+
+                <p><strong>Total: @CartState.TotalPrice kr</strong></p>
+
+                <div class="buttons">
+                    <button class="checkout-btn" @onclick="PlaceOrder">Place Order</button>
+                    <button class="close-btn" @onclick="CloseModal">Close</button>
+                </div>
+            }
+            else
+            {
+                <p>Your cart is empty.</p>
+                <button class="close-btn" @onclick="CloseModal">Close</button>
+            }
+
+        </div>
+    </div>
+}
+
+@code {
+    private string customerName = string.Empty;
+    private string phoneNumber = string.Empty;
+    private async Task PlaceOrder()
+    {
+        var orderDto = new OrderDto
+        {
+            CustomerId = 0,
+            OrderDate = DateTime.UtcNow,
+            TotalPrice = CartState.TotalPrice,
+            IsCompleted = false,
+            Items = CartState.Cart.Select(entry => new OrderItemDto
+            {
+                MenuItemName = entry.MenuItem.Name,
+                Quantity = entry.Quantity
+            }).ToList(),
+            Customer = new OrderCustomerDto
+            {
+                Name = customerName,
+                Telephone = phoneNumber
+            }
+        };
+
+
+        var response = await SubmitOrder(orderDto);
+
+        if (response.IsSuccessStatusCode)
+        {
+
+            CartState.ClearCart();
+            CloseModal();
+        }
+        else
+        {
+            var errorMessage = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"API Error: {errorMessage}");
+        }
+    }
+
+    private void CloseModal()
+    {
+
+        IsOpenChanged.InvokeAsync(false);
+    }
+
+    private async Task<HttpResponseMessage> SubmitOrder(OrderDto orderDto)
+    {
+        return await Http.PostAsJsonAsync("/api/orders", orderDto);
+    }
+
+}
