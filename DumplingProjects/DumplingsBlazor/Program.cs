@@ -1,4 +1,5 @@
 using DumplingsBlazor.Components;
+using DumplingsBlazor.Services;
 
 namespace DumplingsBlazor;
 
@@ -12,6 +13,8 @@ public class Program
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
         builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7172/") });
+        builder.Services.AddScoped<CartState>();
+
 
         var app = builder.Build();
 
